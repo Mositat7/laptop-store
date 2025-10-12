@@ -1,0 +1,49 @@
+::selection{
+  background-color: #F28822;
+  color: #ffffff;
+}
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background-color: #fcfcfc;
+}
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to bottom, #E64624, #EA5D25);
+  border-radius: 4px;
+}
+/* hero slider next and prev btn */
+.swiper-button-next,
+.swiper-button-prev {
+  height: 2.7rem;
+  width: 2.7rem;
+  top: 52%;
+}
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  color: rgb(113 113 122);
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+}
+.swiper-button-next:hover:after,
+.swiper-button-prev:hover:after {
+  color: rgb(63 63 70);
+}
+.swiper-pagination-bullet{
+  background-color: rgb(63 63 70);
+}
+.swiper-pagination-bullet-active{
+  background-color: #E21F27;
+  width: 20px;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+.swiper-horizontal>.swiper-pagination-bullets,.swiper-pagination-bullets.swiper-pagination-horizontal,.swiper-pagination-custom,.swiper-pagination-fraction {
+  bottom: 2px;
+}
