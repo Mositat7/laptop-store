@@ -127,4 +127,20 @@ class ProductController extends Controller
 
         return view('project.best-selling', compact('products', 'mainCategories', 'brands'));
     }
+        public function show($product)
+    {
+        // پیدا کردن محصول با slug
+        $product = Products::where('slug', $product)
+            ->with(['brand', 'category', 'colors', 'sizes']) // بهتره با آرایه باشه
+            ->firstOrFail();
+
+        // محصولات مرتبط (همان دسته‌بندی)
+        $relatedProducts = Products::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->with('brand') // اضافه کردن brand برای نمایش در کارت محصولات
+            ->take(4)
+            ->get();
+        return view('project.singleProduct', compact('product', 'relatedProducts'));
+    }
+
 }

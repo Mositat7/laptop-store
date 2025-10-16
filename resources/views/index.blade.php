@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 
   <title>فروشگاه دیجی استار</title>
@@ -109,53 +109,67 @@
                       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#fff" viewBox="0 0 256 256"><path d="M230.6,49.53A15.81,15.81,0,0,0,216,40H40A16,16,0,0,0,28.19,66.76l.08.09L96,139.17V216a16,16,0,0,0,24.87,13.32l32-21.34A16,16,0,0,0,160,194.66V139.17l67.74-72.32.08-.09A15.8,15.8,0,0,0,230.6,49.53ZM40,56h0Zm106.18,74.58A8,8,0,0,0,144,136v58.66L112,216V136a8,8,0,0,0-2.16-5.47L40,56H216Z"></path></svg>
                   </a>
                   <!-- فیلتر دسته‌بندی -->
-                  <div id="mobile-filter" class="space-y-5 fixed transform md:translate-y-0 transition-transform duration-300 ease-in-out md:static bottom-0 right-3 z-[15] bg-white w-11/12 md:w-full shadow-2xl md:shadow-none border border-zinc-300 md:border-0 pb-5 px-5 md:px-0 rounded-t-2xl md:rounded-none translate-y-full">
-                      <button id="closeFilter" type="button" class="md:hidden mt-5 text-gray-400 cursor-pointer bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center">
-                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                          </svg>
-                      </button>
-                      <h2 class="font-yekanBakhRegular">دسته‌بندی‌ها</h2>
+{{--                  <div id="mobile-filter" class="space-y-5 fixed transform md:translate-y-0 transition-transform duration-300 ease-in-out md:static bottom-0 right-3 z-[15] bg-white w-11/12 md:w-full shadow-2xl md:shadow-none border border-zinc-300 md:border-0 pb-5 px-5 md:px-0 rounded-t-2xl md:rounded-none translate-y-full">--}}
+{{--                      <button id="closeFilter" type="button" class="md:hidden mt-5 text-gray-400 cursor-pointer bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center">--}}
+{{--                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">--}}
+{{--                              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>--}}
+{{--                          </svg>--}}
+{{--                      </button>--}}
+{{--                      <h2 class="font-yekanBakhRegular">دسته‌بندی‌ها</h2>--}}
 
-                      <ul id="categoryList" class="space-y-2 text-sm md:flex gap-x-2">
-                          @foreach($mainCategories as $mainCategory)
-                              <li>
-                                  <button class="category-btn text-right w-full px-4 py-2 rounded-lg hover:bg-zinc-100 cursor-pointer text-sm {{ request('category') == $mainCategory->slug ? 'bg-primary-100 text-primary-600' : '' }}"
-                                          data-category="{{ $mainCategory->slug }}">
-                                      {{ $mainCategory->name }}
-                                  </button>
-                              </li>
-                          @endforeach
-                          <li>
-                              <button class="text-right w-full px-4 py-2 rounded-lg cursor-pointer text-sm text-primary-500 hover:text-primary-600 flex items-center gap-x-1 group {{ !request('category') || request('category') == 'all' ? 'bg-primary-100 text-primary-600' : '' }}"
-                                      data-category="all">
-                                  همه محصولات
-                                  <svg class="fill-primary-600 group-hover:-translate-x-1 transition group-hover:fill-primary-500 size-2.5 md:size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                                      <path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>
-                                  </svg>
-                              </button>
-                          </li>
-                      </ul>
-                  </div>
+{{--                      <ul id="categoryList" class="space-y-2 text-sm md:flex gap-x-2">--}}
+{{--                          @foreach($categories as $category)--}}
+{{--                              <li>--}}
+{{--                                  <button class="category-btn text-right w-full px-4 py-2 rounded-lg hover:bg-zinc-100 cursor-pointer text-sm {{ request('category') == $category->slug ? 'bg-primary-100 text-primary-600' : '' }}"--}}
+{{--                                          data-category="{{ $category->slug }}">--}}
+{{--                                      {{ $category->name }}--}}
+{{--                                  </button>--}}
+{{--                              </li>--}}
+{{--                          @endforeach--}}
+{{--                          <li>--}}
+{{--                              <button class="text-right w-full px-4 py-2 rounded-lg cursor-pointer text-sm text-primary-500 hover:text-primary-600 flex items-center gap-x-1 group {{ !request('category') || request('category') == 'all' ? 'bg-primary-100 text-primary-600' : '' }}"--}}
+{{--                                      data-category="all">--}}
+{{--                                  همه محصولات--}}
+{{--                                  <svg class="fill-primary-600 group-hover:-translate-x-1 transition group-hover:fill-primary-500 size-2.5 md:size-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">--}}
+{{--                                      <path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path>--}}
+{{--                                  </svg>--}}
+{{--                              </button>--}}
+{{--                          </li>--}}
+{{--                      </ul>--}}
+{{--                  </div>--}}
               <!-- Products slider -->
-              <div class="bg-white rounded-xl border border-zinc-100 px-4 py-8">
-                  <div class="containerPSlider swiper">
-                      <div class="selectCategory">
-                          <div id="productList" class="card-wrapper swiper-wrapper">
-                              @foreach($products as $product)
-                                  <div class="swiper-slide card p-4 border rounded-lg flex flex-col gap-2">
-                                      <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-40 object-cover rounded-lg">
-                                      <h3 class="font-semibold text-sm">{{ $product->name }}</h3>
-                                      <p class="text-primary-500 font-bold">{{ number_format($product->price) }} تومان</p>
-                                  </div>
-                              @endforeach
-                          </div>
-                      </div>
-                  </div>
-              </div>
+{{--                  <div class="bg-white rounded-xl border border-zinc-100 px-4 py-8">--}}
+{{--                      <div class="containerPSlider swiper">--}}
+{{--                          <div class="selectCategory">--}}
+{{--                              @if($products->count() > 0)--}}
+{{--                                  <div id="productList" class="card-wrapper swiper-wrapper">--}}
+{{--                                      @foreach($products as $product)--}}
+{{--                                          <div class="swiper-slide card p-4 border rounded-lg flex flex-col gap-2">--}}
+{{--                                              <img src="{{ asset( $product->main_image) }}" alt="{{ $product->title }}"--}}
+{{--                                                   class="w-full h-40 object-cover rounded-lg">--}}
+{{--                                              <h3 class="font-semibold text-sm">{{ $product->tilte }}</h3>--}}
+{{--                                              <p class="text-primary-500 font-bold">{{ number_format($product->price) }} تومان</p>--}}
+{{--                                              <a href="{{ route('product.show', $product->slug) }}"--}}
+{{--                                                 class="mt-2 bg-primary-500 text-white py-2 px-4 rounded-lg text-center hover:bg-primary-600 transition">--}}
+{{--                                                  مشاهده جزئیات--}}
+{{--                                              </a>--}}
+{{--                                          </div>--}}
+{{--                                      @endforeach--}}
+{{--                                  </div>--}}
+{{--                              @else--}}
+{{--                                  <div class="text-center py-8">--}}
+{{--                                      <p class="text-gray-500">محصولی در این دسته‌بندی یافت نشد.</p>--}}
+{{--                                  </div>--}}
+{{--                              @endif--}}
+{{--                          </div>--}}
 
-          </div>
-      </div>
+{{--                          <div class="swiper-button-next"></div>--}}
+{{--                          <div class="swiper-button-prev"></div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+
+{{--          </div>--}}
+{{--      </div>--}}
 
       <!-- product slider 1 -->
     <div class="mt-12 md:mt-20">
@@ -259,10 +273,6 @@
                   <a href="{{ route('products.newest') }}" class="text-blue-500 hover:text-blue-600 transition">
                       مشاهده همه
                   </a>
-{{--                  <a href="#" class="group transition flex items-center justify-center gap-x-1 md:gap-x-2 text-zinc-600 hover:text-primary-500 text-xs md:text-sm text-center">--}}
-{{--                      مشاهده همه--}}
-{{--                      <svg class="fill-zinc-600 group-hover:-translate-x-1 transition group-hover:fill-primary-500 size-2.5 md:size-3" xmlns="http://www.w3.org/2000/svg" width="" height="" fill="" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"></path></svg>--}}
-{{--                  </a>--}}
               </div>
           </div>
           <!-- main slider -->
@@ -282,8 +292,11 @@
                                       @endif
                                   </a>
                                   <p class="text-zinc-400 text-xs">
-                                      {{ $product->brand->name ?? 'بدون برند' }} {{ $product->cpu ?? '' }}
+                                      {{ $product->brand->name ?? 'بدون برند' }}
                                   </p>
+{{--                                  <p class="text-zinc-400 text-xs">--}}
+{{--                                      {{ $product->brand->name ?? 'بدون برند' }} {{ $product->cpu ?? '' }}--}}
+{{--                                  </p>--}}
                                   <a href="#" class="text-zinc-800 text-xs md:text-sm h-8 lg:h-10 line-clamp-2 mt-2">
                                       {{ $product->title }}
                                   </a>
@@ -989,13 +1002,861 @@
         window.loadProductsByCategory = loadProductsByCategory;
     });
 </script>
+<script>
+    // مدیریت فیلتر دسته‌بندی
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const productList = document.getElementById('productList');
+
+        // رویداد کلیک برای دکمه‌های دسته‌بندی
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                filterProducts(category);
+
+                // آپدیت استایل دکمه فعال
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary-100', 'text-primary-600');
+                    btn.classList.add('hover:bg-zinc-100');
+                });
+                this.classList.add('bg-primary-100', 'text-primary-600');
+                this.classList.remove('hover:bg-zinc-100');
+            });
+        });
+
+        // تابع فیلتر محصولات
+        function filterProducts(category) {
+            const url = new URL(window.location.href);
+
+            if (category === 'all') {
+                url.searchParams.delete('category');
+            } else {
+                url.searchParams.set('category', category);
+            }
+
+            // رفرش صفحه با پارامتر جدید
+            window.location.href = url.toString();
+        }
+
+        // مدیریت فیلتر موبایل
+        const filterMobile = document.querySelector('.filter-mobile');
+        const mobileFilter = document.getElementById('mobile-filter');
+        const closeFilter = document.getElementById('closeFilter');
+
+        if (filterMobile && mobileFilter) {
+            filterMobile.addEventListener('click', function(e) {
+                e.preventDefault();
+                mobileFilter.classList.remove('translate-y-full');
+                mobileFilter.classList.add('translate-y-0');
+            });
+
+            closeFilter.addEventListener('click', function() {
+                mobileFilter.classList.add('translate-y-full');
+                mobileFilter.classList.remove('translate-y-0');
+            });
+        }
+    });
+</script>
 <script src="{{ asset('assets/js/swiper.min.js') }}"></script>
 <script src="{{ asset('assets/js/sliders.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 {{--@include('script/scripts')--}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('modal-1');
+        const loginPage = document.getElementById('login-page');
+        const verifyPage = document.getElementById('verify-page');
+        const phoneInput = document.getElementById('phone-input');
+        const phoneDisplay = document.getElementById('phone-display');
+        const loginBtn = document.getElementById('login-btn');
+        const verifyBtn = document.getElementById('verify-btn');
+        const backBtn = document.getElementById('back-btn');
+        const codeInputs = document.querySelectorAll('.code-input');
+        let countdownInterval;
 
+        // مدیریت کلیک روی دکمه ورود
+        loginBtn.addEventListener('click', function () {
+            const phoneNumber = phoneInput.value.trim();
 
+            // اعتبارسنجی شماره تلفن
+            if (!isValidPhoneNumber(phoneNumber)) {
+                alert('لطفا شماره تلفن معتبر وارد کنید');
+                phoneInput.focus();
+                return;
+            }
 
+            // نمایش شماره در صفحه تایید
+            phoneDisplay.textContent = formatPhoneNumber(phoneNumber);
+
+            // تغییر صفحه
+            showVerifyPage();
+
+            // شروع تایمر
+            startCountdown();
+
+            // ارسال کد به سرور
+            sendVerificationCode(phoneNumber);
+        });
+
+        // مدیریت کلیک روی دکمه بازگشت
+        backBtn.addEventListener('click', function () {
+            showLoginPage();
+            clearCountdown();
+        });
+
+        // مدیریت کلیک روی دکمه تایید
+        verifyBtn.addEventListener('click', function () {
+            const code = getVerificationCode();
+
+            if (code.length !== 6) {
+                alert('لطفا کد 6 رقمی را کامل وارد کنید');
+                return;
+            }
+
+            // تایید کد
+            verifyCode(code);
+        });
+
+        // مدیریت ورود خودکار در inputهای کد
+        codeInputs.forEach((input, index) => {
+            input.addEventListener('input', function (e) {
+                // اگر کاراکتر وارد شد به input بعدی برو
+                if (e.target.value.length === 1) {
+                    if (index < codeInputs.length - 1) {
+                        codeInputs[index + 1].focus();
+                    }
+                }
+            });
+
+            input.addEventListener('keydown', function (e) {
+                // اگر backspace زد و input خالی است به input قبلی برو
+                if (e.key === 'Backspace' && e.target.value.length === 0) {
+                    if (index > 0) {
+                        codeInputs[index - 1].focus();
+                    }
+                }
+            });
+        });
+
+        // توابع کمکی
+        function showVerifyPage() {
+            loginPage.classList.add('hidden');
+            verifyPage.classList.remove('hidden');
+            // فوکوس روی اولین input کد
+            codeInputs[0].focus();
+        }
+
+        function showLoginPage() {
+            verifyPage.classList.add('hidden');
+            loginPage.classList.remove('hidden');
+            phoneInput.focus();
+        }
+
+        function isValidPhoneNumber(phone) {
+            const phoneRegex = /^09[0-9]{9}$/;
+            return phoneRegex.test(phone);
+        }
+
+        function formatPhoneNumber(phone) {
+            return phone.replace(/(\d{4})(\d{3})(\d{4})/, '$1 $2 $3');
+        }
+
+        function getVerificationCode() {
+            let code = '';
+            codeInputs.forEach(input => {
+                code += input.value;
+            });
+            return code;
+        }
+
+        function startCountdown() {
+            let timeLeft = 120; // 2 دقیقه
+            const countdownElement = document.getElementById('countdown');
+
+            clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+
+                countdownElement.textContent =
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = 'ارسال مجدد کد';
+                    countdownElement.classList.add('text-primary-600', 'cursor-pointer');
+                    countdownElement.addEventListener('click', resendCode);
+                }
+
+                timeLeft--;
+            }, 1000);
+        }
+
+        function clearCountdown() {
+            clearInterval(countdownInterval);
+        }
+
+        function resendCode() {
+            const phoneNumber = phoneInput.value.trim();
+            sendVerificationCode(phoneNumber);
+            startCountdown();
+
+            // حذف event listener و بازگشت به حالت عادی
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.classList.remove('text-primary-600', 'cursor-pointer');
+            countdownElement.removeEventListener('click', resendCode);
+        }
+
+        // تابع ارسال کد
+        function sendVerificationCode(phoneNumber) {
+            console.log(`ارسال کد به شماره: ${phoneNumber}`);
+
+            fetch('/api/send-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({phone: phoneNumber})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('کد ارسال شد:', data.otp_code);
+                        // کد رو در console می‌بینید (برای تست)
+                    } else {
+                        alert('خطا در ارسال کد: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('خطا در ارسال کد');
+                });
+        }
+
+        // تابع تایید کد - تصحیح شده
+        function verifyCode(code) {
+            const phoneNumber = phoneInput.value.trim();
+
+            fetch('/api/verify-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    phone: phoneNumber,
+                    otp_code: code
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('کد با موفقیت تایید شد!');
+                        closeModal();
+
+                        // رفرش صفحه برای بروزرسانی وضعیت کاربر
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+
+                    } else {
+                        alert('کد وارد شده معتبر نیست: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('خطا در تایید کد');
+                });
+        } // اینجا تابع بسته شد
+
+        // تابع بستن مودال
+        function closeModal() {
+            const modal = document.getElementById('modal-1');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+            showLoginPage(); // بازگشت به صفحه اول برای دفعه بعد
+            clearCountdown();
+            resetForm();
+        }
+
+        // تابع ریست فرم
+        function resetForm() {
+            phoneInput.value = '';
+            codeInputs.forEach(input => input.value = '');
+        }
+    }); // اینجا DOMContentLoaded بسته شد
+</script>
+<div id="modal-1" class="Mymodal fixed inset-0 z-50 hidden bg-black/40 flex items-center justify-center">
+    <div class="modal-content relative w-full max-w-7xl max-h-[90vh] transform scale-95 opacity-0 transition-all duration-300">
+
+        <!-- صفحه اول: ورود با شماره تلفن -->
+        <div id="login-page" class="bg-white rounded-2xl mx-auto border border-zinc-200 w-11/12 sm:w-7/12 md:w-6/12 lg:w-4/12 h-auto py-5 px-4">
+            <img class="w-32 mx-auto" src="{{ asset('assets/image/logo.png') }}" alt="">
+            <div class="mt-5 text-lg font-semibold text-zinc-800">
+                ورود یا ثبت نام
+            </div>
+            <div class="my-4 text-xs text-zinc-500">
+                لطفا شماره موبایل خود را وارد کنید
+            </div>
+            <div class="flex flex-col gap-y-1">
+                <input type="tel" id="phone-input" placeholder="09*********" class="placeholder:text-right text-sm block w-full rounded-md border border-gray-300 px-3 py-3 font-normal text-gray-700 outline-none transition-all focus:border-primary-500 focus:outline-none">
+            </div>
+            <button id="login-btn" class="flex items-center justify-center gap-x-1 text-sm max-w-md mt-10 py-3 rounded-lg text-white bg-gradient-to-bl from-primary-600 to-primary-800 hover:opacity-85 transition w-full">
+                ورود
+            </button>
+        </div>
+
+        <!-- صفحه دوم: تایید کد -->
+        <div id="verify-page" class="bg-white rounded-2xl mx-auto border border-zinc-200 w-11/12 sm:w-7/12 md:w-6/12 lg:w-4/12 h-auto py-5 px-4 hidden">
+            <img class="w-32 mx-auto" src="{{ asset('assets/image/logo.png') }}" alt="">
+            <div class="mt-5 text-lg font-semibold text-zinc-800">
+                تایید شماره موبایل
+            </div>
+            <div class="my-4 text-xs text-zinc-500">
+                لطفا کد 6 رقمی ارسال شده به شماره تلفن
+                <span id="phone-display" class="font-semibold text-zinc-800"></span>
+                را وارد کنید.
+            </div>
+            <div class="input-field mb-5 flex flex-row-reverse gap-x-4 justify-center">
+                <input name="code" type="text" maxlength="1" class="code-input border border-zinc-200 focus:border-primary-500 w-12 h-12 rounded-md outline-none text-center text-lg font-semibold focus:outline-0 focus:border-2 focus:shadow-lg transition-all" required/>
+                <input name="code" type="text" maxlength="1" class="code-input border border-zinc-200 focus:border-primary-500 w-12 h-12 rounded-md outline-none text-center text-lg font-semibold focus:outline-0 focus:border-2 focus:shadow-lg transition-all" required/>
+                <input name="code" type="text" maxlength="1" class="code-input border border-zinc-200 focus:border-primary-500 w-12 h-12 rounded-md outline-none text-center text-lg font-semibold focus:outline-0 focus:border-2 focus:shadow-lg transition-all" required/>
+                <input name="code" type="text" maxlength="1" class="code-input border border-zinc-200 focus:border-primary-500 w-12 h-12 rounded-md outline-none text-center text-lg font-semibold focus:outline-0 focus:border-2 focus:shadow-lg transition-all" required/>
+                <input name="code" type="text" maxlength="1" class="code-input border border-zinc-200 focus:border-primary-500 w-12 h-12 rounded-md outline-none text-center text-lg font-semibold focus:outline-0 focus:border-2 focus:shadow-lg transition-all" required/>
+                <input name="code" type="text" maxlength="1" class="code-input border border-zinc-200 focus:border-primary-500 w-12 h-12 rounded-md outline-none text-center text-lg font-semibold focus:outline-0 focus:border-2 focus:shadow-lg transition-all" required/>
+            </div>
+            <div class="text-center text-xs text-zinc-500 mb-4">
+                <span id="countdown">02:00</span> تا دریافت مجدد کد
+            </div>
+            <button id="verify-btn" class="flex items-center justify-center gap-x-1 text-sm max-w-md mt-4 py-3 rounded-lg text-white bg-gradient-to-bl from-primary-600 to-primary-800 hover:opacity-85 transition w-full">
+                تایید
+            </button>
+            <button id="back-btn" class="flex items-center justify-center gap-x-1 text-sm max-w-md mt-2 py-3 rounded-lg text-zinc-600 border border-zinc-300 hover:bg-zinc-50 transition w-full">
+                بازگشت
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('modal-1');
+        const loginPage = document.getElementById('login-page');
+        const verifyPage = document.getElementById('verify-page');
+        const phoneInput = document.getElementById('phone-input');
+        const phoneDisplay = document.getElementById('phone-display');
+        const loginBtn = document.getElementById('login-btn');
+        const verifyBtn = document.getElementById('verify-btn');
+        const backBtn = document.getElementById('back-btn');
+        const codeInputs = document.querySelectorAll('.code-input');
+        const countdownElement = document.getElementById('countdown');
+
+        let countdownInterval;
+        let currentPhoneNumber = '';
+
+        // مدیریت ورود شماره تلفن
+        phoneInput.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+            if (e.target.value.length > 11) {
+                e.target.value = e.target.value.slice(0, 11);
+            }
+
+            loginBtn.disabled = !isValidPhoneNumber(e.target.value);
+        });
+
+        // مدیریت کلیک روی دکمه ورود
+        loginBtn.addEventListener('click', async function() {
+            const phoneNumber = phoneInput.value.trim();
+
+            if (!isValidPhoneNumber(phoneNumber)) {
+                showAlert('لطفا شماره تلفن معتبر وارد کنید', 'error');
+                phoneInput.focus();
+                return;
+            }
+
+            currentPhoneNumber = phoneNumber;
+            loginBtn.innerHTML = '<span class="loader"></span> در حال ارسال کد...';
+            loginBtn.disabled = true;
+
+            try {
+                const response = await fetch('/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': getCsrfToken()
+                    },
+                    body: JSON.stringify({ phone: phoneNumber })
+                });
+
+                console.log('Response status:', response.status);
+
+                const result = await response.json();
+                console.log('Send OTP Result:', result);
+
+                if (result.success) {
+                    phoneDisplay.textContent = formatPhoneNumber(phoneNumber);
+                    showVerifyPage();
+                    startCountdown();
+                    showAlert('کد تایید ارسال شد', 'success');
+                    console.log('OTP Code:', result.otp_code);
+                } else {
+                    showAlert(result.message || 'خطا در ارسال کد', 'error');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('خطا در ارتباط با سرور', 'error');
+            } finally {
+                loginBtn.innerHTML = 'ورود';
+                loginBtn.disabled = false;
+            }
+        });
+
+        // مدیریت کلیک روی دکمه تایید
+        verifyBtn.addEventListener('click', async function() {
+            const code = getVerificationCode();
+
+            if (code.length !== 6) {
+                showAlert('لطفا کد 6 رقمی را کامل وارد کنید', 'error');
+                codeInputs[0].focus();
+                return;
+            }
+
+            verifyBtn.innerHTML = '<span class="loader"></span> در حال تایید...';
+            verifyBtn.disabled = true;
+
+            try {
+                const response = await fetch('/verify-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': getCsrfToken()
+                    },
+                    body: JSON.stringify({
+                        phone: currentPhoneNumber,
+                        otp_code: code
+                    })
+                });
+
+                const result = await response.json();
+                console.log('Verify OTP Result:', result);
+
+                if (result.success) {
+                    showAlert('ورود موفقیت‌آمیز!', 'success');
+                    localStorage.setItem('auth_token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+
+                    setTimeout(() => {
+                        closeModal();
+                        updateHeaderUserInfo(result.user);
+                        window.location.reload();
+                    }, 1500);
+
+                } else {
+                    showAlert(result.message || 'کد تایید معتبر نیست', 'error');
+                    clearCodeInputs();
+                    codeInputs[0].focus();
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('خطا در تایید کد', 'error');
+            } finally {
+                verifyBtn.innerHTML = 'تایید';
+                verifyBtn.disabled = false;
+            }
+        });
+
+        // مدیریت کلیک روی دکمه بازگشت
+        backBtn.addEventListener('click', function() {
+            showLoginPage();
+            clearCountdown();
+        });
+
+        // مدیریت inputهای کد
+        codeInputs.forEach((input, index) => {
+            input.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+
+                if (e.target.value.length === 1 && index < codeInputs.length - 1) {
+                    codeInputs[index + 1].focus();
+                }
+
+                verifyBtn.disabled = getVerificationCode().length !== 6;
+            });
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+                    codeInputs[index - 1].focus();
+                }
+            });
+
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pasteData = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
+
+                if (pasteData.length === 6) {
+                    codeInputs.forEach((input, i) => {
+                        input.value = pasteData[i] || '';
+                    });
+                    codeInputs[5].focus();
+                    verifyBtn.disabled = false;
+                }
+            });
+        });
+
+        // توابع کمکی
+        function showVerifyPage() {
+            loginPage.classList.add('hidden');
+            verifyPage.classList.remove('hidden');
+            verifyBtn.disabled = true;
+            setTimeout(() => codeInputs[0].focus(), 300);
+        }
+
+        function showLoginPage() {
+            verifyPage.classList.add('hidden');
+            loginPage.classList.remove('hidden');
+            phoneInput.focus();
+        }
+
+        function isValidPhoneNumber(phone) {
+            return /^09[0-9]{9}$/.test(phone);
+        }
+
+        function formatPhoneNumber(phone) {
+            return phone.replace(/(\d{4})(\d{3})(\d{4})/, '$1 $2 $3');
+        }
+
+        function getVerificationCode() {
+            return Array.from(codeInputs).map(input => input.value).join('');
+        }
+
+        function clearCodeInputs() {
+            codeInputs.forEach(input => input.value = '');
+        }
+
+        function startCountdown() {
+            let timeLeft = 120;
+            clearInterval(countdownInterval);
+
+            countdownElement.textContent = formatTime(timeLeft);
+            countdownElement.classList.remove('text-primary-600', 'cursor-pointer', 'hover:underline');
+            countdownElement.onclick = null;
+
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                countdownElement.textContent = formatTime(timeLeft);
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = 'ارسال مجدد کد';
+                    countdownElement.classList.add('text-primary-600', 'cursor-pointer', 'hover:underline');
+                    countdownElement.onclick = resendCode;
+                }
+            }, 1000);
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function clearCountdown() {
+            clearInterval(countdownInterval);
+        }
+
+        async function resendCode() {
+            if (!currentPhoneNumber) return;
+
+            try {
+                countdownElement.classList.remove('cursor-pointer', 'hover:underline');
+                countdownElement.textContent = 'در حال ارسال...';
+
+                const response = await fetch('/auth/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': getCsrfToken()
+                    },
+                    body: JSON.stringify({ phone: currentPhoneNumber })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert('کد تایید مجدداً ارسال شد', 'success');
+                    startCountdown();
+                    clearCodeInputs();
+                    codeInputs[0].focus();
+                    console.log('New OTP Code:', result.otp_code);
+                } else {
+                    showAlert(result.message || 'خطا در ارسال کد', 'error');
+                    countdownElement.textContent = 'ارسال مجدد کد';
+                    countdownElement.classList.add('text-primary-600', 'cursor-pointer', 'hover:underline');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('خطا در ارتباط با سرور', 'error');
+                countdownElement.textContent = 'ارسال مجدد کد';
+                countdownElement.classList.add('text-primary-600', 'cursor-pointer', 'hover:underline');
+            }
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            showLoginPage();
+            clearCountdown();
+            resetForm();
+        }
+
+        function resetForm() {
+            phoneInput.value = '';
+            clearCodeInputs();
+            currentPhoneNumber = '';
+            loginBtn.disabled = true;
+            verifyBtn.disabled = true;
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white transform transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            }`;
+            alertDiv.innerHTML = `
+            <div class="flex items-center gap-2">
+                <span>${message}</span>
+                <button onclick="this.parentElement.parentElement.remove()" class="text-lg">&times;</button>
+            </div>
+        `;
+
+            document.body.appendChild(alertDiv);
+
+            setTimeout(() => {
+                if (alertDiv.parentElement) {
+                    alertDiv.remove();
+                }
+            }, 4000);
+        }
+
+        function getCsrfToken() {
+            return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}';
+        }
+
+        // مدیریت کلیک خارج از modal
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // مدیریت کلید ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // فعال کردن modal
+        setTimeout(() => {
+            const modalContent = modal.querySelector('.modal-content');
+            if (modalContent) {
+                modalContent.style.transform = 'scale(1)';
+                modalContent.style.opacity = '1';
+            }
+        }, 50);
+    });
+
+    // تابع خروج
+    async function logout() {
+        if (!confirm('آیا از خروج اطمینان دارید؟')) {
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('auth_token');
+
+            await fetch('/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}'
+                }
+            });
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            localStorage.removeItem('auth_token');
+            localStorage.removeItem('user');
+            window.location.reload();
+        }
+    }
+
+    // آپدیت اطلاعات کاربر در هدر
+    function updateHeaderUserInfo(user) {
+        const userSection = document.getElementById('user-section');
+        if (userSection && user) {
+            userSection.innerHTML = `
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <svg class="w-4 h-4 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <span class="text-sm text-zinc-700">${user.full_name || 'کاربر'}</span>
+                </div>
+                <button onclick="logout()" class="text-xs text-red-500 hover:text-red-700 transition-colors">خروج</button>
+            </div>
+        `;
+        }
+    }
+
+    // بررسی وضعیت ورود کاربر
+    function checkAuthStatus() {
+        const token = localStorage.getItem('auth_token');
+        const user = localStorage.getItem('user');
+
+        if (token && user) {
+            try {
+                const userData = JSON.parse(user);
+                updateHeaderUserInfo(userData);
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('user');
+            }
+        }
+    }
+
+    // اجرای بررسی وضعیت هنگام لود صفحه
+    document.addEventListener('DOMContentLoaded', checkAuthStatus);
+
+    // تابع برای باز کردن modal
+    function openLoginModal() {
+        const modal = document.getElementById('modal-1');
+        if (modal) {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                const modalContent = modal.querySelector('.modal-content');
+                if (modalContent) {
+                    modalContent.style.transform = 'scale(1)';
+                    modalContent.style.opacity = '1';
+                }
+            }, 50);
+        }
+    }
+
+    // تابع برای بستن modal
+    function closeLoginModal() {
+        const modal = document.getElementById('modal-1');
+        if (modal) {
+            const modalContent = modal.querySelector('.modal-content');
+            if (modalContent) {
+                modalContent.style.transform = 'scale(0.95)';
+                modalContent.style.opacity = '0';
+            }
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+    }
+
+    // استایل لودر
+    const style = document.createElement('style');
+    style.textContent = `
+    .loader {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #ffffff;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    button:disabled:hover {
+        opacity: 0.6;
+    }
+`;
+    document.head.appendChild(style);
+</script>
+<script>
+    // مدیریت کلیک روی دکمه تایید
+    verifyBtn.addEventListener('click', async function() {
+        const code = getVerificationCode();
+
+        if (code.length !== 6) {
+            showAlert('لطفا کد 6 رقمی را کامل وارد کنید', 'error');
+            codeInputs[0].focus();
+            return;
+        }
+
+        verifyBtn.innerHTML = '<span class="loader"></span> در حال تایید...';
+        verifyBtn.disabled = true;
+
+        try {
+            const response = await fetch('/verify-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': getCsrfToken()
+                },
+                body: JSON.stringify({
+                    phone: currentPhoneNumber,
+                    otp_code: code
+                })
+            });
+
+            const result = await response.json();
+            console.log('Verify OTP Result:', result);
+
+            // 🔥🔥🔥 اینجا کد رو قرار بدید 🔥🔥🔥
+            if (result.success) {
+                showAlert('ورود موفقیت‌آمیز!', 'success');
+
+                // ذخیره توکن و اطلاعات کاربر
+                localStorage.setItem('auth_token', result.token);
+                localStorage.setItem('user', JSON.stringify(result.user));
+
+                setTimeout(() => {
+                    closeModal();
+                    updateHeaderUserInfo(result.user);
+                    // 🔥 مستقیماً به پروفایل هدایت کن
+                    window.location.href = '/profile';
+                }, 1500);
+
+            } else {
+                showAlert(result.message || 'کد تایید معتبر نیست', 'error');
+                clearCodeInputs();
+                codeInputs[0].focus();
+            }
+            // 🔥🔥🔥 تا اینجا 🔥🔥🔥
+
+        } catch (error) {
+            console.error('Error:', error);
+            showAlert('خطا در تایید کد', 'error');
+        } finally {
+            verifyBtn.innerHTML = 'تایید';
+            verifyBtn.disabled = false;
+        }
+    });
+</script>
 
 <!-- Mirrored from amirtttk.ir/digiStar/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 12:54:00 GMT -->
 </html>
