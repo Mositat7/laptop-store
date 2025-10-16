@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-
             // اطلاعات اصلی
             $table->string('title'); // نام محصول
             $table->string('slug')->unique(); // برای لینک‌ها

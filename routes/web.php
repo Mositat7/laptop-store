@@ -1,14 +1,27 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+// اضافه کردن route های POST برای احراز هویت
+// Route login برای redirect middleware auth
+
+Route::post('/send-otp', [AuthController::class, 'sendOtp']);
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+//Route::post('/logout', [AuthController::class, 'logout']);
+// Route های پروفایل - بدون middleware
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 //مشاهده همه پر فروش ترین و جدیدترین
 Route::get('/products/newest', [ProductController::class, 'newest'])->name('products.newest');
 Route::get('/products/best-selling', [ProductController::class, 'bestSelling'])->name('products.best-selling');
@@ -47,9 +60,11 @@ Route::get('/contactUs', function () {
 Route::get('/dashboard', function () {
     return view('project.dashboard');
 });
-Route::get('/profile', function () {
-    return view('project.profile');
-});
+
+//Route::get('/profile', function () {
+//    return view('project.profile');
+//})->name('profile')->middleware('auth:sanctum');
+
 Route::get('/search', function () {
     return view('project.search');
 });

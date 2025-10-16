@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
+       $this->call([
+          UserSeeder::class,
+       ]);
 //        بلاک
         $this->call([
             BlogCategorySeeder::class,
             BlogPostSeeder::class,
-
-
         ]);
 //درباره ما
         $this->call([
