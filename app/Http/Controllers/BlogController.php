@@ -43,33 +43,12 @@ class BlogController extends Controller
             ->with('category')
             ->firstOrFail();
 
-        // افزایش تعداد بازدیدها
-        $blog->increment('views');
+        // افزایش بازدید فقط یک‌بار در هر session
+        if (!session()->has("viewed_blog_{$blog->id}")) {
+            $blog->increment('views');
+            session(["viewed_blog_{$blog->id}" => true]);
+        }
 
         return view('project.single-blog', compact('blog'));
     }
-//    public function index(){
-//        // مقالات
-////        $blogPosts = BlogPost::published()->latest()->take(5)->get();
-//        // مقالات با پاژینیشن (6 مقاله در هر صفحه)
-//        $blogPosts = BlogPost::published()->latest()->paginate(3);
-//        $blogPost =  BlogPost::published()->latest()->paginate(4);
-//        // دسته‌بندی‌های مقالات
-//        $blogCategories = BlogCategory::active()->ordered()->get();
-//        // مقالات با فیلتر دسته‌بندی
-//        $blogQuery = BlogPost::published()->latest();
-//
-//        if ($request->has('category') && $request->category !== 'latest') {
-//            $blogQuery->whereHas('category', function($q) use ($request) {
-//                $q->where('slug', $request->category);
-//            });
-//        }
-//        return view('project.blogs', compact(
-//         'blogPosts',
-//            'blogCategories',
-//            'blogPost'
-//        ));
-//
-//    }
-
 }

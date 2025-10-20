@@ -3,22 +3,27 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 // اضافه کردن route های POST برای احراز هویت
 // Route login برای redirect middleware auth
-
-Route::post('/send-otp', [AuthController::class, 'sendOtp']);
-Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-//Route::post('/logout', [AuthController::class, 'logout']);
+//نمایش تعداد ویو
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+Route::post('/api/send-otp', [AuthController::class, 'sendOtp']);
+Route::post('/api/verify-otp', [AuthController::class, 'verifyOtp']);
+//نتیجه سرچ
+Route::get('/search', [ProductController::class, 'search'])->name('search');
+//حارج شدن از حساب
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 // Route های پروفایل - بدون middleware
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -27,7 +32,12 @@ Route::get('/products/newest', [ProductController::class, 'newest'])->name('prod
 Route::get('/products/best-selling', [ProductController::class, 'bestSelling'])->name('products.best-selling');
 // صفحه محصول
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('product.show');
-//Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+//اضافه کردن محصول
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+//آپدیت سبد
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+//حذف کردن
+Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
 // روت برای نمایش محصولات هر دسته‌بندی
 //Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
@@ -64,8 +74,8 @@ Route::get('/dashboard', function () {
 //Route::get('/profile', function () {
 //    return view('project.profile');
 //})->name('profile')->middleware('auth:sanctum');
-
-Route::get('/search', function () {
-    return view('project.search');
-});
+//
+//Route::get('/search', function () {
+//    return view('project.search');
+//});
 

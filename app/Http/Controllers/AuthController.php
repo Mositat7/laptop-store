@@ -143,7 +143,6 @@ class AuthController extends Controller
                 'user_id' => Auth::id()
             ]);
 
-            $token = $user->createToken('mobile-app')->plainTextToken;
 
             Log::info('=== OTP VERIFICATION SUCCESS ===');
 
@@ -158,7 +157,7 @@ class AuthController extends Controller
                     'role' => $user->role,
                     'full_name' => $user->name . ' ' . $user->family,
                 ],
-                'token' => $token
+//                'token' => $token
             ]);
 
         } catch (\Exception $e) {
@@ -238,67 +237,27 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            Log::info('=== USER LOGOUT START ===');
+            // لاگ کردن برای دیباگ
+            Log::info('Logout process started for user: ' . auth()->id());
 
-            // اگر کاربر لاگین کرده
-            if (Auth::check()) {
-                $user = Auth::user();
-                Log::info('User logging out:', [
-                    'user_id' => $user->id,
-                    'phone' => $user->phone
-                ]);
+            // ذخیره اطلاعات کاربر قبل از logout
+            $userId = auth()->id();
 
-                // حذف تمام توکن‌های کاربر
-                $user->tokens()->delete();
-                Log::info('User tokens deleted');
-
-                // لاگ اوت از session
-                Auth::logout();
-
-                // invalidate session
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-
-                Log::info('=== USER LOGOUT SUCCESS ===');
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'خروج از حساب کاربری با موفقیت انجام شد'
-                ]);
-            }
-
-            Log::warning('Logout attempted but no user was authenticated');
-
-            return response()->json([
-                'success' => false,
-                'message' => 'کاربر لاگین نکرده است'
-            ], 401);
-
-        } catch (\Exception $e) {
-            Log::error('Logout Error: ' . $e->getMessage());
-            Log::error('Stack trace: ' . $e->getTraceAsString());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'خطا در خروج از حساب کاربری'
-            ], 500);
-        }
-    }
-
-    /**
-     * متد جایگزین برای لاگ اوت از طریق وب (session-based)
-     */
-    public function webLogout(Request $request)
-    {
-        try {
+            // انجام logout
             Auth::logout();
+
+            // Invalidate session
             $request->session()->invalidate();
+
+            // Regenerate token
             $request->session()->regenerateToken();
 
-            return redirect('/')->with('success', 'خروج از حساب کاربری با موفقیت انجام شد');
+            Log::info('Logout process completed for user: ' . $userId);
+
+            return redirect('/')->with('success', 'خروج از حساب کاربری با موفقیت انجام شد.');
 
         } catch (\Exception $e) {
-            Log::error('Web Logout Error: ' . $e->getMessage());
+            Log::error('Logout error: ' . $e->getMessage());
             return redirect('/')->with('error', 'خطا در خروج از حساب کاربری');
         }
     }

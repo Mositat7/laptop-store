@@ -24,15 +24,12 @@ class Products extends Model
      */
     public function brand()
     {
-        return $this->belongsTo(Brands::class);
+        return $this->belongsTo(\App\Models\Brands::class, 'brand_id');
     }
 
-    /**
-     * رابطه با دسته‌بندی
-     */
     public function category()
     {
-        return $this->belongsTo(categories::class);
+        return $this->belongsTo(\App\Models\Categories::class, 'category_id');
     }
 
     /**
@@ -59,6 +56,10 @@ class Products extends Model
             'product_id',
             'size_id'
         );
+    }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'product_id');
     }
 
 }
