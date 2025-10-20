@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 
   <title>فروشگاه دیجی استار</title>
@@ -25,33 +25,58 @@
               <div class="lg:w-4/12">
                   <div class="flex gap-x-5 pr-10">
                       <!-- دکمه علاقه‌مندی (غیرفعال موقت) -->
+                      <!-- ❤️ دکمه علاقه‌مندی -->
                       <div class="relative">
-                          <div class="group cursor-not-allowed relative inline-block text-center opacity-50">
-                              <svg class="fill-zinc-400" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
-                                  <path d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z"></path>
-                              </svg>
-                              <div class="opacity-0 w-28 transition-all bg-zinc-800 text-white text-center text-xs rounded-lg py-2 absolute z-10 -left-11 group-hover:opacity-100 px-3 pointer-events-none">
-                                  برای استفاده وارد حساب کاربری شوید
-                                  <svg class="absolute text-black h-2 w-full left-0 bottom-full rotate-180" x="0px" y="0px" viewBox="0 0 255 255">
-                                      <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+                          @auth
+                              <button
+                                  type="button"
+                                  class="group relative inline-block text-center hover:scale-110 transition-transform"
+                                  onclick="toggleFavorite({{ $product->id }})"
+                              >
+                                  <svg class="fill-zinc-400 group-hover:fill-red-500 transition-colors" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
+                                      <path d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z"></path>
                                   </svg>
+                              </button>
+                          @else
+                              <div class="group cursor-not-allowed relative inline-block text-center opacity-50">
+                                  <svg class="fill-zinc-400" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
+                                      <path d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z"></path>
+                                  </svg>
+                                  <div class="opacity-0 w-28 transition-all bg-zinc-800 text-white text-center text-xs rounded-lg py-2 absolute z-10 -left-11 group-hover:opacity-100 px-3 pointer-events-none">
+                                      برای استفاده وارد حساب کاربری شوید
+                                      <svg class="absolute text-black h-2 w-full left-0 bottom-full rotate-180" viewBox="0 0 255 255">
+                                          <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+                                      </svg>
+                                  </div>
                               </div>
-                          </div>
+                          @endauth
                       </div>
 
-                      <!-- دکمه مقایسه (غیرفعال موقت) -->
+                      <!-- 🔁 دکمه مقایسه -->
                       <div class="relative">
-                          <div class="group cursor-not-allowed relative inline-block text-center opacity-50">
-                              <svg class="fill-zinc-400" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
-                                  <path d="M112,152a8,8,0,0,0-8,8v28.69L75.72,160.4A39.71,39.71,0,0,1,64,132.12V95a32,32,0,1,0-16,0v37.13a55.67,55.67,0,0,0,16.4,39.6L92.69,200H64a8,8,0,0,0,0,16h48a8,8,0,0,0,8-8V160A8,8,0,0,0,112,152ZM40,64A16,16,0,1,1,56,80,16,16,0,0,1,40,64Zm168,97V123.88a55.67,55.67,0,0,0-16.4-39.6L163.31,56H192a8,8,0,0,0,0-16H144a8,8,0,0,0-8,8V96a8,8,0,0,0,16,0V67.31L180.28,95.6A39.71,39.71,0,0,1,192,123.88V161a32,32,0,1,0,16,0Zm-8,47a16,16,0,1,1,16-16A16,16,0,0,1,200,208Z"></path>
-                              </svg>
-                              <div class="opacity-0 w-28 transition-all bg-zinc-800 text-white text-center text-xs rounded-lg py-2 absolute z-10 -left-11 group-hover:opacity-100 px-3 pointer-events-none">
-                                  برای استفاده وارد حساب کاربری شوید
-                                  <svg class="absolute text-black h-2 w-full left-0 bottom-full rotate-180" x="0px" y="0px" viewBox="0 0 255 255">
-                                      <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+                          @auth
+                              <button
+                                  type="button"
+                                  class="group relative inline-block text-center hover:scale-110 transition-transform"
+                                  onclick="addToCompare({{ $product->id }})"
+                              >
+                                  <svg class="fill-zinc-400 group-hover:fill-primary-500 transition-colors" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
+                                      <path d="M112,152a8,8,0,0,0-8,8v28.69L75.72,160.4A39.71,39.71,0,0,1,64,132.12V95a32,32,0,1,0-16,0v37.13a55.67,55.67,0,0,0,16.4,39.6L92.69,200H64a8,8,0,0,0,0,16h48a8,8,0,0,0,8-8V160A8,8,0,0,0,112,152ZM40,64A16,16,0,1,1,56,80,16,16,0,0,1,40,64Zm168,97V123.88a55.67,55.67,0,0,0-16.4-39.6L163.31,56H192a8,8,0,0,0,0-16H144a8,8,0,0,0-8,8V96a8,8,0,0,0,16,0V67.31L180.28,95.6A39.71,39.71,0,0,1,192,123.88V161a32,32,0,1,0,16,0Zm-8,47a16,16,0,1,1,16-16A16,16,0,0,1,200,208Z"></path>
                                   </svg>
+                              </button>
+                          @else
+                              <div class="group cursor-not-allowed relative inline-block text-center opacity-50">
+                                  <svg class="fill-zinc-400" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 256">
+                                      <path d="M112,152a8,8,0,0,0-8,8v28.69L75.72,160.4A39.71,39.71,0,0,1,64,132.12V95a32,32,0,1,0-16,0v37.13a55.67,55.67,0,0,0,16.4,39.6L92.69,200H64a8,8,0,0,0,0,16h48a8,8,0,0,0,8-8V160A8,8,0,0,0,112,152ZM40,64A16,16,0,1,1,56,80,16,16,0,0,1,40,64Zm168,97V123.88a55.67,55.67,0,0,0-16.4-39.6L163.31,56H192a8,8,0,0,0,0-16H144a8,8,0,0,0-8,8V96a8,8,0,0,0,16,0V67.31L180.28,95.6A39.71,39.71,0,0,1,192,123.88V161a32,32,0,1,0,16,0Zm-8,47a16,16,0,1,1,16-16A16,16,0,0,1,200,208Z"></path>
+                                  </svg>
+                                  <div class="opacity-0 w-28 transition-all bg-zinc-800 text-white text-center text-xs rounded-lg py-2 absolute z-10 -left-11 group-hover:opacity-100 px-3 pointer-events-none">
+                                      برای استفاده وارد حساب کاربری شوید
+                                      <svg class="absolute text-black h-2 w-full left-0 bottom-full rotate-180" viewBox="0 0 255 255">
+                                          <polygon class="fill-current" points="0,0 127.5,127.5 255,0"></polygon>
+                                      </svg>
+                                  </div>
                               </div>
-                          </div>
+                          @endauth
                       </div>
 
                       <!-- دکمه اشتراک‌گذاری (فعال) -->
@@ -154,8 +179,12 @@
                 </a>
                 <div class="flex items-start gap-x-1 text-sm text-zinc-500">
         <span>
-            <span>({{ $product->reviews_count }})</span>
-            <span>{{ number_format($product->rating, 1) }}</span>
+{{--            <span>({{ $product->reviews_count }})</span>--}}
+{{--            <span>{{ number_format($product->rating, 1) }}</span>--}}
+         <span>
+    <span class="review-count">({{ $product->reviews_count }})</span>
+    <span class="rating-value">{{ number_format($product->rating, 1) }}</span>
+         </span>
         </span>
                     <svg class="fill-primary-500" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#f9bc00" viewBox="0 0 256 256">
                         <path d="M234.5,114.38l-45.1,39.36,13.51,58.6a16,16,0,0,1-23.84,17.34l-51.11-31-51,31a16,16,0,0,1-23.84-17.34L66.61,153.8,21.5,114.38a16,16,0,0,1,9.11-28.06l59.46-5.15,23.21-55.36a15.95,15.95,0,0,1,29.44,0h0L166,81.17l59.44,5.15a16,16,0,0,1,9.11,28.06Z"></path>
@@ -263,7 +292,7 @@
                           <path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path>
                       </svg>
                       <div>رضایت از محصول:</div>
-                      <span>97%</span>
+                      <span id="satisfactionPercent">{{ $satisfactionPercent }}%</span>
                   </div>
 
                   <div class="flex flex-col justify-center py-5">
@@ -284,7 +313,6 @@
                               موجودی تمام شده
                           @endif
                       </div>
-
                       <div class="quantity-container mt-5 flex h-10 w-full items-center justify-between rounded-lg border border-gray-100 px-2 py-1">
                           <button class="cursor-pointer" type="button" data-action="decrement">
                               <svg class="fill-red-500 size-5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256">
@@ -301,11 +329,13 @@
                   </div>
 
                   @if($product->stock > 0)
-                      <button class="hidden lg:block mx-auto cursor-pointer w-full px-2 py-3 text-sm bg-gradient-to-bl from-primary-400 to-primary-600 hover:opacity-80 transition text-gray-100 rounded-lg">
+                      <button type="button"
+                              onclick="addToCart({{ $product->id }}, getQuantity())"
+                              class="hidden lg:block mx-auto cursor-pointer w-full px-2 py-3 text-sm bg-gradient-to-bl from-primary-400 to-primary-600 hover:opacity-80 transition text-gray-100 rounded-lg">
                           افزودن به سبد خرید
                       </button>
                   @else
-                      <button class="hidden lg:block mx-auto w-full px-2 py-3 text-sm bg-gradient-to-bl from-primary-500 to-primary-400 opacity-80 cursor-not-allowed transition text-gray-100 rounded-lg">
+                      <button class="hidden lg:block mx-auto w-full px-2 py-3 text-sm bg-gray-400 cursor-not-allowed transition text-gray-100 rounded-lg">
                           محصول موجود نیست!
                       </button>
                   @endif
@@ -315,6 +345,14 @@
             هزینه پست برای سبد خرید بالای 400 هزار تومان رایگان میباشد.
           </div>
           <!-- fixed div buy mobile -->
+              <div id="cart-success-message" class="hidden fixed top-20 right-4 z-50 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 scale-95 opacity-0">
+                  <div class="flex items-center gap-2">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>محصول با موفقیت به سبد خرید اضافه شد!</span>
+                  </div>
+              </div>
           <div class="fixed flex bottom-0 right-0 lg:hidden bg-white border-t border-t-zinc-300 w-full px-5 py-3 gap-x-2 z-50">
             <button class="mx-auto 5 w-1/2 px-2 py-3 text-sm bg-gradient-to-bl from-primary-400 to-primary-600 hover:opacity-80 transition text-gray-100 rounded-lg">
               افزودن به سبد خرید
@@ -348,87 +386,6 @@
           پرسش ها
         </a>
       </div>
-{{--      <div class="p-4 border-b border-zinc-200 scroll-mt-36" id="details">--}}
-{{--        <p class="text-zinc-800 md:text-lg mb-1 mt-4">--}}
-{{--          توضیحات این محصول--}}
-{{--        </p>--}}
-{{--        <p class="text-zinc-600 text-xs md:text-sm leading-8 my-2">--}}
-{{--          دیجیتو فروشگاه آنلاین معتبری است که انواع کالاهای دیجیتال مانند گوشی، لپ‌تاپ، تبلت و لوازم جانبی را با ضمانت اصالت و ارسال سریع ارائه می‌دهد. با تنوع گسترده محصولات، قیمت‌های رقابتی و پشتیبانی حرفه‌ای، خریدی آسان و مطمئن را تجربه کنید. بررسی تخصصی، مقایسه و انتخاب آگاهانه از مزایای خرید از دیجیتو است. برای دسترسی به جدیدترین محصولات دیجیتال، همین حالا به دیجیتو سر بزنید!--}}
-{{--        </p>--}}
-{{--        <p class="text-zinc-600 text-xs md:text-sm leading-8 my-2">--}}
-{{--          دیجیتو فروشگاه آنلاین معتبری است که انواع کالاهای دیجیتال مانند گوشی، لپ‌تاپ، تبلت و لوازم جانبی را با ضمانت اصالت و ارسال سریع ارائه می‌دهد. با تنوع گسترده محصولات، قیمت‌های رقابتی و پشتیبانی حرفه‌ای، خریدی آسان و مطمئن را تجربه کنید. بررسی تخصصی، مقایسه و انتخاب آگاهانه از مزایای خرید از دیجیتو است. برای دسترسی به جدیدترین محصولات دیجیتال، همین حالا به دیجیتو سر بزنید!--}}
-{{--        </p>--}}
-{{--        <img class="rounded-xl w-full" src="{{ asset('assets/image/heroSlider/1.webp')}}" alt="">--}}
-{{--        <p class="text-zinc-600 text-xs md:text-sm leading-8 my-2">--}}
-{{--          دیجیتو فروشگاه آنلاین معتبری است که انواع کالاهای دیجیتال مانند گوشی، لپ‌تاپ، تبلت و لوازم جانبی را با ضمانت اصالت و ارسال سریع ارائه می‌دهد. با تنوع گسترده محصولات، قیمت‌های رقابتی و پشتیبانی حرفه‌ای، خریدی آسان و مطمئن را تجربه کنید. بررسی تخصصی، مقایسه و انتخاب آگاهانه از مزایای خرید از دیجیتو است. برای دسترسی به جدیدترین محصولات دیجیتال، همین حالا به دیجیتو سر بزنید!--}}
-{{--        </p>--}}
-{{--        <p class="text-zinc-600 text-xs md:text-sm leading-8 my-2">--}}
-{{--          دیجیتو فروشگاه آنلاین معتبری است که انواع کالاهای دیجیتال مانند گوشی، لپ‌تاپ، تبلت و لوازم جانبی را با ضمانت اصالت و ارسال سریع ارائه می‌دهد. با تنوع گسترده محصولات، قیمت‌های رقابتی و پشتیبانی حرفه‌ای، خریدی آسان و مطمئن را تجربه کنید. بررسی تخصصی، مقایسه و انتخاب آگاهانه از مزایای خرید از دیجیتو است. برای دسترسی به جدیدترین محصولات دیجیتال، همین حالا به دیجیتو سر بزنید!--}}
-{{--        </p>--}}
-{{--      </div>--}}
-{{--      <div class="p-4 border-b border-zinc-200 scroll-mt-36" id="proper">--}}
-{{--        <p class="text-zinc-800 md:text-lg mb-1 mt-4">--}}
-{{--          مشخصات محصول--}}
-{{--        </p>--}}
-{{--        <div class="text-gray-500 text-sm divide-y divide-zinc-200">--}}
-{{--          <div class="flex items-center justify-start p-3 pb-6 w-full my-4">--}}
-{{--            <div class="text-sm md:text-basetext-zinc-700 w-3/12 font-yekanBakhRegular">--}}
-{{--              پردازنده:--}}
-{{--            </div>--}}
-{{--            <div class="md:text-lg text-zinc-600 w-9/12 font-yekanBakhExtraBold">--}}
-{{--              AM32x new product AM32x new product AM32x new product AM32x new product--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="flex items-center justify-start p-3 pb-6 w-full my-4">--}}
-{{--            <div class="text-sm md:text-basetext-zinc-700 w-3/12 font-yekanBakhRegular">--}}
-{{--              پردازنده:--}}
-{{--            </div>--}}
-{{--            <div class="md:text-lg text-zinc-600 w-9/12 font-yekanBakhExtraBold">--}}
-{{--              AM32x new product--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="flex items-center justify-start p-3 pb-6 w-full my-4">--}}
-{{--            <div class="text-sm md:text-basetext-zinc-700 w-3/12 font-yekanBakhRegular">--}}
-{{--              پردازنده:--}}
-{{--            </div>--}}
-{{--            <div class="md:text-lg text-zinc-600 w-9/12 font-yekanBakhExtraBold">--}}
-{{--              AM32x new product--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="flex items-center justify-start p-3 pb-6 w-full my-4">--}}
-{{--            <div class="text-sm md:text-basetext-zinc-700 w-3/12 font-yekanBakhRegular">--}}
-{{--              پردازنده:--}}
-{{--            </div>--}}
-{{--            <div class="md:text-lg text-zinc-600 w-9/12 font-yekanBakhExtraBold">--}}
-{{--              AM32x new product--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="flex items-center justify-start p-3 pb-6 w-full my-4">--}}
-{{--            <div class="text-sm md:text-basetext-zinc-700 w-3/12 font-yekanBakhRegular">--}}
-{{--              پردازنده:--}}
-{{--            </div>--}}
-{{--            <div class="md:text-lg text-zinc-600 w-9/12 font-yekanBakhExtraBold">--}}
-{{--              AM32x new product--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="flex items-center justify-start p-3 pb-6 w-full my-4">--}}
-{{--            <div class="text-sm md:text-basetext-zinc-700 w-3/12 font-yekanBakhRegular">--}}
-{{--              پردازنده:--}}
-{{--            </div>--}}
-{{--            <div class="md:text-lg text-zinc-600 w-9/12 font-yekanBakhExtraBold">--}}
-{{--              AM32x new product--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--          <div class="flex items-center justify-start p-3 pb-6 w-full my-4">--}}
-{{--            <div class="text-sm md:text-basetext-zinc-700 w-3/12 font-yekanBakhRegular">--}}
-{{--              پردازنده:--}}
-{{--            </div>--}}
-{{--            <div class="md:text-lg text-zinc-600 w-9/12 font-yekanBakhExtraBold">--}}
-{{--              AM32x new product--}}
-{{--            </div>--}}
-{{--          </div>--}}
-{{--        </div>--}}
-{{--      </div>--}}
           <!-- بخش توضیحات محصول -->
           <section id="details" class="mt-12 pt-8 border-t border-zinc-200">
               <h3 class="text-xl font-bold text-zinc-800 mb-6">توضیحات محصول</h3>
@@ -488,129 +445,310 @@
                   @endif
               </div>
           </section>
-      <div class="p-4 scroll-mt-36" id="comments">
-        <p class="text-zinc-800 md:text-lg mb-1 mt-4">
-          دیدگاه ها
-        </p>
-        <div class="lg:flex gap-5">
-          <div class="lg:w-3/12 py-5">
-            <div class="mt-4 mb-2 text-sm text-zinc-700">
-              شما هم دیدگاه خود را ثبت کنید
-            </div>
-            <ul class="grid my-3 gap-5 grid-cols-2">
-              <li>
-                <input type="radio" id="yes" name="hosting" value="yes" class="hidden peer" required="">
-                <label for="yes" class="inline-flex items-center justify-center w-full px-2 py-3 text-gray-600 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-400 peer-checked:text-green-500 hover:text-gray-600 hover:bg-gray-100">
-                  <div class="flex items-center gap-x-1">
-                    <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
-                    <div class="text-sm">پیشنهاد میشود</div>
+{{--      <div class="p-4 scroll-mt-36" id="comments">--}}
+{{--        <p class="text-zinc-800 md:text-lg mb-1 mt-4">--}}
+{{--          دیدگاه ها--}}
+{{--        </p>--}}
+{{--        <div class="lg:flex gap-5">--}}
+{{--          <div class="lg:w-3/12 py-5">--}}
+{{--            <div class="mt-4 mb-2 text-sm text-zinc-700">--}}
+{{--              شما هم دیدگاه خود را ثبت کنید--}}
+{{--            </div>--}}
+{{--            <ul class="grid my-3 gap-5 grid-cols-2">--}}
+{{--              <li>--}}
+{{--                  <input type="radio" id="recommend_yes" name="recommend" value="1" class="hidden peer" required>--}}
+{{--                  <label for="recommend_yes" class="inline-flex items-center justify-center w-full px-3 py-2 text-gray-600 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-400 peer-checked:text-green-500 hover:bg-gray-50">--}}
+{{--                      <svg class="fill-green-500 w-5 h-5 me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>--}}
+{{--                      <span>پیشنهاد می‌شود</span>--}}
+{{--                  </label>--}}
+{{--              </li>--}}
+{{--              <li>--}}
+{{--                <input type="radio" id="no" name="hosting" value="no" class="hidden peer" required="">--}}
+{{--                <li>--}}
+{{--                    <input type="radio" id="recommend_no" name="recommend" value="0" class="hidden peer" required>--}}
+{{--                    <label for="recommend_no" class="inline-flex items-center justify-center w-full px-3 py-2 text-gray-600 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-400 peer-checked:text-red-500 hover:bg-gray-50">--}}
+{{--                        <svg class="fill-red-500 w-5 h-5 me-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>--}}
+{{--                        <span>پیشنهاد نمی‌شود</span>--}}
+{{--                    </label>--}}
+{{--                </li>--}}
+{{--              </li>--}}
+{{--            </ul>--}}
+{{--              <!-- فرم ثبت نظر -->--}}
+{{--              <form id="reviewForm" class="mt-6 bg-white shadow-sm rounded-2xl p-6 border border-zinc-100">--}}
+{{--                  @csrf--}}
+{{--                  <input type="hidden" name="product_id" value="{{ $product->id }}">--}}
+
+{{--                  <!-- عنوان -->--}}
+{{--                  <h3 class="text-lg font-bold text-zinc-800 mb-4 flex items-center gap-2">--}}
+{{--                      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">--}}
+{{--                          <path d="M12 20l9-5-9-5-9 5 9 5z" />--}}
+{{--                          <path d="M12 12l9-5-9-5-9 5 9 5z" />--}}
+{{--                      </svg>--}}
+{{--                      ثبت دیدگاه شما--}}
+{{--                  </h3>--}}
+
+{{--                  <!-- امتیاز -->--}}
+{{--                  <div class="mb-5">--}}
+{{--                      <label class="block text-sm font-medium text-zinc-700 mb-3">امتیاز شما:</label>--}}
+{{--                      <div class="flex gap-1 text-3xl text-gray-300 cursor-pointer" id="ratingStars">--}}
+{{--                          <input type="hidden" name="rating" id="ratingValue" required>--}}
+{{--                          <span data-value="1" class="star transition">★</span>--}}
+{{--                          <span data-value="2" class="star transition">★</span>--}}
+{{--                          <span data-value="3" class="star transition">★</span>--}}
+{{--                          <span data-value="4" class="star transition">★</span>--}}
+{{--                          <span data-value="5" class="star transition">★</span>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+
+{{--                  <!-- نظر -->--}}
+{{--                  <div class="mb-5">--}}
+{{--                      <label class="block text-sm font-medium text-zinc-700 mb-2">نظر شما:</label>--}}
+{{--                      <textarea--}}
+{{--                          name="comment"--}}
+{{--                          class="w-full border border-zinc-200 rounded-xl p-3 h-28 focus:ring-2 focus:ring-primary-400 focus:outline-none transition"--}}
+{{--                          placeholder="نظر خود را بنویسید..."--}}
+{{--                          required--}}
+{{--                      ></textarea>--}}
+{{--                  </div>--}}
+
+{{--                  <!-- دکمه ارسال -->--}}
+{{--                  <button--}}
+{{--                      type="submit"--}}
+{{--                      class="w-full bg-primary-500 text-white font-semibold py-3 rounded-xl shadow hover:bg-primary-600 active:scale-95 transition"--}}
+{{--                  >--}}
+{{--                      ثبت دیدگاه--}}
+{{--                  </button>--}}
+{{--              </form>--}}
+{{--          </div>--}}
+{{--          <div class="lg:w-9/12 divide-y-2 divide-zinc-300">--}}
+{{--            <div class="px-2 pt-5">--}}
+{{--              <div class="text-lg text-zinc-700">--}}
+{{--                خوب بود ارزش خرید داره--}}
+{{--              </div>--}}
+{{--              <div class="mt-2 flex gap-x-4 items-center border-b border-zinc-200 pb-3">--}}
+{{--                <div class="text-xs text-zinc-600">--}}
+{{--                  11 بهمن 1402--}}
+{{--                </div>--}}
+{{--                <div class="text-xs text-zinc-600">--}}
+{{--                  امیررضا کریمی--}}
+{{--                </div>--}}
+{{--                <div class="text-xs text-zinc-50 bg-green-400 rounded-full px-2 py-1">--}}
+{{--                  خریدار--}}
+{{--                </div>--}}
+{{--              </div>--}}
+{{--              <div class="flex items-center gap-x-1 pt-3">--}}
+{{--                <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>--}}
+{{--                <div class="text-sm text-green-500">پیشنهاد میشود</div>--}}
+{{--              </div>--}}
+{{--              <div class="mt-2 text-zinc-600 text-sm">--}}
+{{--                واقعا لپ تاپ عالی از هر نظر نسبت به قیمتش--}}
+{{--              </div>--}}
+{{--              <div class="flex justify-end items-center gap-x-5 mt-3">--}}
+{{--                <div class="text-sm text-zinc-400">--}}
+{{--                  آیا این دیدگاه برایتان مفید بود؟--}}
+{{--                </div>--}}
+{{--                <ul class="grid my-3 gap-5 grid-cols-2">--}}
+{{--                  <li>--}}
+{{--                    <input type="radio" id="isgood" name="what" value="isgood" class="hidden peer" required="">--}}
+{{--                    <label for="isgood" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-400 hover:bg-gray-100">--}}
+{{--                      <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>--}}
+{{--                    </label>--}}
+{{--                  </li>--}}
+{{--                  <li>--}}
+{{--                    <input type="radio" id="isbad" name="what" value="isbad" class="hidden peer" required="">--}}
+{{--                    <label for="isbad" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-400 hover:bg-gray-100">--}}
+{{--                      <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>--}}
+{{--                    </label>--}}
+{{--                  </li>--}}
+{{--                </ul>--}}
+{{--              </div>--}}
+{{--            </div>--}}
+{{--            <div class="px-2 pt-5">--}}
+{{--              <div class="text-lg text-zinc-700">--}}
+{{--                تاچ پدش خراب بود، اجازه ی مرجوعی هم ندادن--}}
+{{--              </div>--}}
+{{--              <div class="mt-2 flex gap-x-4 items-center border-b border-zinc-200 pb-3">--}}
+{{--                <div class="text-xs text-zinc-600">--}}
+{{--                  10 بهمن 1402--}}
+{{--                </div>--}}
+{{--                <div class="text-xs text-zinc-600">--}}
+{{--                  امیررضا کریمی--}}
+{{--                </div>--}}
+{{--                <div class="text-xs text-zinc-50 bg-green-400 rounded-full px-2 py-1">--}}
+{{--                  خریدار--}}
+{{--                </div>--}}
+{{--              </div>--}}
+{{--              <div class="flex items-center gap-x-1 pt-3">--}}
+{{--                <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>--}}
+{{--                <div class="text-sm text-red-500">پیشنهاد نمیشود</div>--}}
+{{--              </div>--}}
+{{--              <div class="mt-2 text-zinc-600 text-sm">--}}
+{{--                واقعا لپ تاپ عالی از هر نظر نسبت به قیمتش--}}
+{{--              </div>--}}
+{{--              <div class="flex justify-end items-center gap-x-5 mt-3">--}}
+{{--                <div class="text-sm text-zinc-400">--}}
+{{--                  آیا این دیدگاه برایتان مفید بود؟--}}
+{{--                </div>--}}
+{{--                <ul class="grid my-3 gap-5 grid-cols-2">--}}
+{{--                  <li>--}}
+{{--                    <input type="radio" id="isgood2" name="what2" value="isgood2" class="hidden peer" required="">--}}
+{{--                    <label for="isgood2" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-400 hover:bg-gray-100">--}}
+{{--                      <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>--}}
+{{--                    </label>--}}
+{{--                  </li>--}}
+{{--                  <li>--}}
+{{--                    <input type="radio" id="isbad2" name="what2" value="isbad2" class="hidden peer" required="">--}}
+{{--                    <label for="isbad2" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-400 hover:bg-gray-100">--}}
+{{--                      <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>--}}
+{{--                    </label>--}}
+{{--                  </li>--}}
+{{--                </ul>--}}
+{{--              </div>--}}
+{{--            </div>--}}
+{{--          </div>--}}
+{{--        </div>--}}
+{{--      </div>--}}
+          <div class="p-4 scroll-mt-36" id="comments">
+              <p class="text-zinc-800 md:text-lg mb-1 mt-4">
+                  دیدگاه‌ها
+              </p>
+              <div class="lg:flex gap-5">
+
+                  {{-- فرم ثبت نظر --}}
+                  <div class="lg:w-3/12 py-5">
+                      <div class="mt-4 mb-2 text-sm text-zinc-700">
+                          شما هم دیدگاه خود را ثبت کنید
+                      </div>
+                      <ul class="grid my-3 gap-5 grid-cols-2">
+                          <li>
+                              <input type="radio" id="recommend_yes" name="recommend" value="1" class="hidden peer" required checked>
+
+                              {{--                              <input type="radio" id="recommend_yes" name="recommend" value="1" class="hidden peer" required>--}}
+                              <label for="recommend_yes"
+                                     class="inline-flex items-center justify-center w-full px-3 py-2 text-gray-600 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-400 peer-checked:text-green-500 hover:bg-gray-50">
+                                  <svg class="fill-green-500 w-5 h-5 me-1" xmlns="http://www.w3.org/2000/svg"
+                                       viewBox="0 0 256 256">
+                                      <path
+                                          d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z">
+                                      </path>
+                                  </svg>
+                                  <span>پیشنهاد می‌شود</span>
+                              </label>
+                          </li>
+                          <li>
+                              <input type="radio" id="recommend_no" name="recommend" value="0" class="hidden peer" required>
+                              <label for="recommend_no"
+                                     class="inline-flex items-center justify-center w-full px-3 py-2 text-gray-600 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-400 peer-checked:text-red-500 hover:bg-gray-50">
+                                  <svg class="fill-red-500 w-5 h-5 me-1" xmlns="http://www.w3.org/2000/svg"
+                                       viewBox="0 0 256 256">
+                                      <path
+                                          d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z">
+                                      </path>
+                                  </svg>
+                                  <span>پیشنهاد نمی‌شود</span>
+                              </label>
+                          </li>
+                      </ul>
+
+                      <form id="reviewForm"
+                            class="mt-6 bg-white shadow-sm rounded-2xl p-6 border border-zinc-100">
+                          @csrf
+                          <input type="hidden" name="product_id" value="{{ $product->id }}">
+
+                          {{-- عنوان --}}
+                          <h3 class="text-lg font-bold text-zinc-800 mb-4 flex items-center gap-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-primary-500"
+                                   viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                  <path d="M12 20l9-5-9-5-9 5 9 5z" />
+                                  <path d="M12 12l9-5-9-5-9 5 9 5z" />
+                              </svg>
+                              ثبت دیدگاه شما
+                          </h3>
+
+                          {{-- امتیاز --}}
+                          <div class="mb-5">
+                              <label class="block text-sm font-medium text-zinc-700 mb-3">امتیاز شما:</label>
+                              <div class="flex gap-1 text-3xl text-gray-300 cursor-pointer" id="ratingStars">
+                                  <input type="hidden" name="rating" id="ratingValue" required>
+                                  <span data-value="1" class="star transition">★</span>
+                                  <span data-value="2" class="star transition">★</span>
+                                  <span data-value="3" class="star transition">★</span>
+                                  <span data-value="4" class="star transition">★</span>
+                                  <span data-value="5" class="star transition">★</span>
+                              </div>
+                          </div>
+
+                          {{-- نظر --}}
+                          <div class="mb-5">
+                              <label class="block text-sm font-medium text-zinc-700 mb-2">نظر شما:</label>
+                              <textarea name="comment"
+                                        class="w-full border border-zinc-200 rounded-xl p-3 h-28 focus:ring-2 focus:ring-primary-400 focus:outline-none transition"
+                                        placeholder="نظر خود را بنویسید..." required></textarea>
+                          </div>
+
+                          {{-- دکمه ارسال --}}
+                          <button type="submit"
+                                  class="w-full bg-primary-500 text-white font-semibold py-3 rounded-xl shadow hover:bg-primary-600 active:scale-95 transition">
+                              ثبت دیدگاه
+                          </button>
+                      </form>
                   </div>
-                </label>
-              </li>
-              <li>
-                <input type="radio" id="no" name="hosting" value="no" class="hidden peer" required="">
-                <label for="no" class="inline-flex items-center justify-center w-full px-2 py-3 text-gray-600 bg-white border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-400 peer-checked:text-red-400 hover:text-gray-600 hover:bg-gray-100">
-                  <div class="flex items-center gap-x-1">
-                    <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>
-                    <div class="text-sm">پیشنهاد نمیشود</div>
+
+                  {{-- نمایش دیدگاه‌ها --}}
+                  <div class="lg:w-9/12 divide-y-2 divide-zinc-300">
+                      @forelse ($reviews as $review)
+                          <div class="px-2 pt-5">
+                              <div class="text-lg text-zinc-700">
+                                  {{ $review->comment }}
+                              </div>
+
+                              <div class="mt-2 flex gap-x-4 items-center border-b border-zinc-200 pb-3">
+                                  <div class="text-xs text-zinc-600">
+                                      {{ jdate($review->created_at)->format('d F Y') }}
+                                  </div>
+                                  <div class="text-xs text-zinc-600">
+                                      {{ $review->user->name ?? 'کاربر ناشناس' }}
+                                  </div>
+                                  <div class="text-xs text-zinc-50 bg-green-400 rounded-full px-2 py-1">
+                                      خریدار
+                                  </div>
+                              </div>
+
+                              <div class="flex items-center gap-x-1 pt-3">
+                                  @if ($review->recommend)
+                                      <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22"
+                                           height="22" viewBox="0 0 256 256">
+                                          <path
+                                              d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z">
+                                          </path>
+                                      </svg>
+                                      <div class="text-sm text-green-500">پیشنهاد می‌شود</div>
+                                  @else
+                                      <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22"
+                                           height="22" viewBox="0 0 256 256">
+                                          <path
+                                              d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z">
+                                          </path>
+                                      </svg>
+                                      <div class="text-sm text-red-500">پیشنهاد نمی‌شود</div>
+                                  @endif
+                              </div>
+
+                              <div class="mt-2 text-zinc-600 text-sm">
+                                  امتیاز: {{ $review->rating }}/5
+                              </div>
+                          </div>
+                      @empty
+                          <div class="px-2 pt-5 text-zinc-600">
+                              هنوز هیچ دیدگاهی ثبت نشده است.
+                          </div>
+                      @endforelse
                   </div>
-                </label>
-              </li>
-            </ul>
-            <textarea placeholder="متن دیدگاه" name="mailTicket" cols="30" rows="7" class="rounded-2xl rounded-tr-sm text-sm text-zinc-600 w-full bg-white border border-zinc-200 px-5 py-3.5 placeholder:text-zinc-400 placeholder:text-xs focus:outline-1 focus:outline-zinc-300"></textarea>
-            <button class="hidden lg:block mx-auto cursor-pointer w-full px-2 py-3 text-sm bg-gradient-to-bl from-primary-400 to-primary-600 hover:opacity-80 transition text-gray-100 rounded-lg">
-              ارسال دیدگاه
-            </button>
+
+              </div>
           </div>
-          <div class="lg:w-9/12 divide-y-2 divide-zinc-300">
-            <div class="px-2 pt-5">
-              <div class="text-lg text-zinc-700">
-                خوب بود ارزش خرید داره
-              </div>
-              <div class="mt-2 flex gap-x-4 items-center border-b border-zinc-200 pb-3">
-                <div class="text-xs text-zinc-600">
-                  11 بهمن 1402
-                </div>
-                <div class="text-xs text-zinc-600">
-                  امیررضا کریمی
-                </div>
-                <div class="text-xs text-zinc-50 bg-green-400 rounded-full px-2 py-1">
-                  خریدار
-                </div>
-              </div>
-              <div class="flex items-center gap-x-1 pt-3">
-                <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
-                <div class="text-sm text-green-500">پیشنهاد میشود</div>
-              </div>
-              <div class="mt-2 text-zinc-600 text-sm">
-                واقعا لپ تاپ عالی از هر نظر نسبت به قیمتش
-              </div>
-              <div class="flex justify-end items-center gap-x-5 mt-3">
-                <div class="text-sm text-zinc-400">
-                  آیا این دیدگاه برایتان مفید بود؟
-                </div>
-                <ul class="grid my-3 gap-5 grid-cols-2">
-                  <li>
-                    <input type="radio" id="isgood" name="what" value="isgood" class="hidden peer" required="">
-                    <label for="isgood" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-400 hover:bg-gray-100">
-                      <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
-                    </label>
-                  </li>
-                  <li>
-                    <input type="radio" id="isbad" name="what" value="isbad" class="hidden peer" required="">
-                    <label for="isbad" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-400 hover:bg-gray-100">
-                      <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>
-                    </label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="px-2 pt-5">
-              <div class="text-lg text-zinc-700">
-                تاچ پدش خراب بود، اجازه ی مرجوعی هم ندادن
-              </div>
-              <div class="mt-2 flex gap-x-4 items-center border-b border-zinc-200 pb-3">
-                <div class="text-xs text-zinc-600">
-                  10 بهمن 1402
-                </div>
-                <div class="text-xs text-zinc-600">
-                  امیررضا کریمی
-                </div>
-                <div class="text-xs text-zinc-50 bg-green-400 rounded-full px-2 py-1">
-                  خریدار
-                </div>
-              </div>
-              <div class="flex items-center gap-x-1 pt-3">
-                <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>
-                <div class="text-sm text-red-500">پیشنهاد نمیشود</div>
-              </div>
-              <div class="mt-2 text-zinc-600 text-sm">
-                واقعا لپ تاپ عالی از هر نظر نسبت به قیمتش
-              </div>
-              <div class="flex justify-end items-center gap-x-5 mt-3">
-                <div class="text-sm text-zinc-400">
-                  آیا این دیدگاه برایتان مفید بود؟
-                </div>
-                <ul class="grid my-3 gap-5 grid-cols-2">
-                  <li>
-                    <input type="radio" id="isgood2" name="what2" value="isgood2" class="hidden peer" required="">
-                    <label for="isgood2" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-green-400 hover:bg-gray-100">
-                      <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
-                    </label>
-                  </li>
-                  <li>
-                    <input type="radio" id="isbad2" name="what2" value="isbad2" class="hidden peer" required="">
-                    <label for="isbad2" class="inline-flex p-2 border border-gray-200 rounded-lg cursor-pointer peer-checked:border-red-400 hover:bg-gray-100">
-                      <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="" viewBox="0 0 256 256"><path d="M239.82,157l-12-96A24,24,0,0,0,204,40H32A16,16,0,0,0,16,56v88a16,16,0,0,0,16,16H75.06l37.78,75.58A8,8,0,0,0,120,240a40,40,0,0,0,40-40V184h56a24,24,0,0,0,23.82-27ZM72,144H32V56H72Zm150,21.29a7.88,7.88,0,0,1-6,2.71H152a8,8,0,0,0-8,8v24a24,24,0,0,1-19.29,23.54L88,150.11V56H204a8,8,0,0,1,7.94,7l12,96A7.87,7.87,0,0,1,222,165.29Z"></path></svg>
-                    </label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="p-4 scroll-mt-36" id="comments2">
+
+          <div class="p-4 scroll-mt-36" id="comments2">
         <p class="text-zinc-800 md:text-lg mb-1 mt-4">
           پرسش و پاسخ
         </p>
@@ -767,6 +905,387 @@
   <footer class="bg-white border-t border-zinc-200 w-full px-5 md:px-10 py-5">
    @include('partial/footer')
   </footer>
+  <script>
+      let quantity = 1;
+      const maxStock = {{ $product->stock }};
+
+      // مدیریت دکمه‌های افزایش/کاهش
+      document.querySelectorAll('[data-action="increment"]').forEach(btn => {
+          btn.addEventListener('click', () => {
+              if (quantity < maxStock) {
+                  quantity++;
+                  document.querySelector('.quantity-container input').value = quantity;
+              }
+          });
+      });
+
+      document.querySelectorAll('[data-action="decrement"]').forEach(btn => {
+          btn.addEventListener('click', () => {
+              if (quantity > 1) {
+                  quantity--;
+                  document.querySelector('.quantity-container input').value = quantity;
+              }
+          });
+      });
+
+      function getQuantity() {
+          return quantity;
+      }
+
+      // ارسال به سبد خرید
+      // ارسال به سبد خرید
+      async function addToCart(productId, qty) {
+          // نمایش لودر در دکمه
+          const buttons = document.querySelectorAll('button[onclick*="addToCart"]');
+          buttons.forEach(btn => {
+              btn.innerHTML = '<span class="loader"></span> در حال افزودن...';
+              btn.disabled = true;
+          });
+
+          try {
+              const res = await fetch('{{ route("cart.add") }}', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                  },
+                  body: JSON.stringify({
+                      product_id: productId,
+                      quantity: qty
+                  })
+              });
+
+              const data = await res.json();
+
+              if (data.success) {
+                  showAlert(data.message || 'محصول به سبد خرید اضافه شد', 'success');
+
+                  // به‌روزرسانی UI سبد خرید
+                  updateCartUI(data);
+
+              } else {
+                  showAlert(data.message || 'خطا در افزودن به سبد خرید', 'error');
+              }
+          } catch (e) {
+              console.error(e);
+              showAlert('خطا در ارتباط با سرور', 'error');
+          } finally {
+              // بازگرداندن دکمه به حالت اولیه
+              buttons.forEach(btn => {
+                  btn.innerHTML = 'افزودن به سبد خرید';
+                  btn.disabled = false;
+              });
+          }
+      }
+
+      // به‌روزرسانی UI سبد خرید
+      function updateCartUI(data) {
+          // به‌روزرسانی تعداد سبد خرید در هدر
+          updateCartCount(data.cart_count || data.total_items);
+
+          // به‌روزرسانی dropdown سبد خرید
+          updateCartDropdown(data.cart_items, data.total_items, data.total_price);
+      }
+
+      // به‌روزرسانی تعداد سبد خرید در هدر
+      function updateCartCount(count) {
+          const cartCountElements = document.querySelectorAll('.cart-count');
+          cartCountElements.forEach(element => {
+              element.textContent = count;
+              if (count > 0) {
+                  element.classList.remove('hidden');
+              } else {
+                  element.classList.add('hidden');
+              }
+          });
+      }
+
+      // به‌روزرسانی dropdown سبد خرید
+      function updateCartDropdown(cartItems, totalItems, totalPrice) {
+          const cartDropdown = document.getElementById('cart-dropdown');
+
+          if (!cartDropdown) {
+              console.log('Dropdown سبد خرید پیدا نشد');
+              return;
+          }
+
+          let itemsHtml = '';
+
+          if (cartItems && cartItems.length > 0) {
+              itemsHtml = `<ul class="main-scroll h-full space-y-2 divide-y divide-gray-100 overflow-y-auto p-5 pl-2">`;
+
+              cartItems.forEach(item => {
+                  itemsHtml += `
+                <li>
+                    <div class="flex gap-x-2 py-5">
+                        <div class="relative min-w-fit">
+                            <a href="/product/${item.product_slug}">
+                                <img alt="${item.product_name}"
+                                     class="h-[120px] w-[120px] rounded-xl object-cover"
+                                     src="${item.product_image}">
+                            </a>
+                        </div>
+                        <div class="w-full space-y-1.5">
+                            <a class="line-clamp-2 h-12 text-zinc-700 font-yekanBakhRegular"
+                               href="/product/${item.product_slug}">
+                                ${item.product_name}
+                            </a>
+                            <div class="flex items-center justify-between gap-x-2">
+                                <div class="text-gray-700">
+                                    <span class="text-sm">${Number(item.product_price).toLocaleString()}</span>
+                                    <span class="text-sm">تومان</span>
+                                </div>
+                                <div class="quantity-container flex h-10 max-w-28 items-center justify-between rounded-lg border border-gray-100 px-2 py-1">
+                                    <button class="cursor-pointer update-cart" type="button"
+                                            data-action="increment"
+                                            data-cart-id="${item.id}">
+                                        <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256">
+                                            <path d="M222,128a6,6,0,0,1-6,6H134v82a6,6,0,0,1-12,0V134H40a6,6,0,0,1,0-12h82V40a6,6,0,0,1,12,0v82h82A6,6,0,0,1,222,128Z"></path>
+                                        </svg>
+                                    </button>
+                                    <input value="${item.quantity}" disabled type="number"
+                                           class="flex h-5 w-full grow select-none items-center justify-center bg-transparent text-center text-sm text-zinc-700 outline-none">
+                                    <button class="cursor-pointer update-cart" type="button"
+                                            data-action="decrement"
+                                            data-cart-id="${item.id}">
+                                        <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256">
+                                            <path d="M222,128a6,6,0,0,1-6,6H40a6,6,0,0,1,0-12H216A6,6,0,0,1,222,128Z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            `;
+              });
+
+              itemsHtml += `</ul>`;
+          } else {
+              itemsHtml = `
+            <div class="h-full flex items-center justify-center text-zinc-500 text-sm p-5">
+                سبد خرید شما خالی است.
+            </div>
+        `;
+          }
+
+          // به‌روزرسانی محتوای dropdown
+          const itemsContainer = cartDropdown.querySelector('.h-60');
+          if (itemsContainer) {
+              itemsContainer.innerHTML = itemsHtml;
+          }
+
+          // به‌روزرسانی تعداد کالاها
+          const totalItemsElement = cartDropdown.querySelector('.text-sm.text-zinc-500');
+          if (totalItemsElement) {
+              totalItemsElement.textContent = `${totalItems} کالا`;
+          }
+
+          // به‌روزرسانی لینک مشاهده سبد خرید
+          const viewCartLink = cartDropdown.querySelector('a[href*="cart"]');
+          if (viewCartLink) {
+              if (totalItems > 0) {
+                  viewCartLink.classList.remove('hidden');
+              } else {
+                  viewCartLink.classList.add('hidden');
+              }
+          }
+
+          // به‌روزرسانی بخش قیمت
+          const priceSection = cartDropdown.querySelector('.border-t.border-gray-100');
+          if (priceSection) {
+              if (totalItems > 0) {
+                  priceSection.classList.remove('hidden');
+
+                  // به‌روزرسانی قیمت کل
+                  const totalPriceElement = priceSection.querySelector('.font-bold');
+                  if (totalPriceElement) {
+                      totalPriceElement.textContent = Number(totalPrice).toLocaleString();
+                  }
+              } else {
+                  priceSection.classList.add('hidden');
+              }
+          }
+      }
+
+      // تابع نمایش پیام
+      function showAlert(message, type) {
+          // حذف پیام‌های قبلی
+          const existingAlerts = document.querySelectorAll('.custom-alert');
+          existingAlerts.forEach(alert => alert.remove());
+
+          const alertDiv = document.createElement('div');
+          alertDiv.className = `custom-alert fixed top-20 right-4 z-50 p-4 rounded-lg text-white transform transition-all duration-300 ${
+              type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          }`;
+          alertDiv.innerHTML = `
+        <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>${message}</span>
+        </div>
+    `;
+          document.body.appendChild(alertDiv);
+
+          // مخفی کردن خودکار بعد از 3 ثانیه
+          setTimeout(() => {
+              alertDiv.remove();
+          }, 3000);
+      }
+
+      // لودر
+      const style = document.createElement('style');
+      style.textContent = `
+        .loader {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+            margin-right: 6px;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+      document.head.appendChild(style);
+  </script>
+  <script>
+      document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const form = this;
+          const formData = new FormData(form);
+
+          const recommend = document.querySelector('input[name="recommend"]:checked');
+          if (recommend) formData.set('recommend', recommend.value);
+
+          fetch("{{ route('reviews.store') }}", {
+              method: 'POST',
+              headers: {
+                  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+              },
+              body: formData
+          })
+              .then(res => res.json())
+              .then(response => {
+                  if (response.success) {
+                      alert(response.message);
+
+                      form.reset();
+                      document.getElementById('recommend_yes').checked = true;
+
+                      // اضافه کردن کامنت جدید
+                      const commentsContainer = document.querySelector('.lg\\:w-9\\/12');
+                      const newComment = document.createElement('div');
+                      newComment.classList.add('px-2','pt-5');
+                      newComment.innerHTML = `
+                <div class="text-lg text-zinc-700">
+                    ${formData.get('comment')}
+                </div>
+                <div class="mt-2 flex gap-x-4 items-center border-b border-zinc-200 pb-3">
+                    <div class="text-xs text-zinc-600">الان</div>
+                    <div class="text-xs text-zinc-600">شما</div>
+                    <div class="text-xs text-zinc-50 bg-green-400 rounded-full px-2 py-1">خریدار</div>
+                </div>
+                <div class="flex items-center gap-x-1 pt-3">
+                    ${recommend.value == 1
+                          ? '<div class="text-sm text-green-500">پیشنهاد می‌شود</div>'
+                          : '<div class="text-sm text-red-500">پیشنهاد نمی‌شود</div>'
+                      }
+                </div>
+                <div class="mt-2 text-zinc-600 text-sm">
+                    امتیاز: ${formData.get('rating')}/5
+                </div>
+            `;
+                      commentsContainer.prepend(newComment);
+
+                      // آپدیت درصد رضایت بدون رفرش
+                      document.getElementById('satisfactionPercent').innerText = response.recommend_percent + '%';
+                  } else {
+                      alert(response.error || 'خطا در ثبت نظر');
+                  }
+              })
+              .catch(err => {
+                  alert('خطا در ارتباط با سرور');
+                  console.error(err);
+              });
+      });
+
+  </script>
+{{--  <script>--}}
+  {{--    document.getElementById('reviewForm')?.addEventListener('submit', function(e) {--}}
+  {{--        e.preventDefault();--}}
+  {{--        const form = this;--}}
+  {{--        const formData = new FormData(form);--}}
+
+  {{--        // مقدار recommend--}}
+  {{--        const recommend = document.querySelector('input[name="recommend"]:checked');--}}
+  {{--        if (recommend) {--}}
+  {{--            formData.set('recommend', recommend.value);--}}
+  {{--        }--}}
+
+  {{--        fetch("{{ route('reviews.store') }}", {--}}
+  {{--            method: 'POST',--}}
+  {{--            headers: {--}}
+  {{--                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),--}}
+  {{--            },--}}
+  {{--            body: formData--}}
+  {{--        })--}}
+  {{--            .then(res => res.json())--}}
+  {{--            .then(response => {--}}
+  {{--                if (response.success) {--}}
+  {{--                    alert(response.message);--}}
+
+  {{--                    // ریست فرم--}}
+  {{--                    form.reset();--}}
+
+  {{--                    // دیفالت دوباره گزینه اول را انتخاب کن--}}
+  {{--                    document.getElementById('recommend_yes').checked = true;--}}
+
+  {{--                    // اضافه کردن کامنت جدید به لیست بدون رفرش--}}
+  {{--                    const commentsContainer = document.querySelector('.lg\\:w-9\\/12');--}}
+  {{--                    const newComment = document.createElement('div');--}}
+  {{--                    newComment.classList.add('px-2','pt-5');--}}
+  {{--                    newComment.innerHTML = `--}}
+  {{--              <div class="text-lg text-zinc-700">--}}
+  {{--                  ${formData.get('comment')}--}}
+  {{--              </div>--}}
+  {{--              <div class="mt-2 flex gap-x-4 items-center border-b border-zinc-200 pb-3">--}}
+  {{--                  <div class="text-xs text-zinc-600">--}}
+  {{--                      الان--}}
+  {{--                  </div>--}}
+  {{--                  <div class="text-xs text-zinc-600">--}}
+  {{--                      شما--}}
+  {{--                  </div>--}}
+  {{--                  <div class="text-xs text-zinc-50 bg-green-400 rounded-full px-2 py-1">--}}
+  {{--                      خریدار--}}
+  {{--                  </div>--}}
+  {{--              </div>--}}
+  {{--              <div class="flex items-center gap-x-1 pt-3">--}}
+  {{--                  ${recommend.value == 1--}}
+  {{--                        ? '<div class="text-sm text-green-500">پیشنهاد می‌شود</div>'--}}
+  {{--                        : '<div class="text-sm text-red-500">پیشنهاد نمی‌شود</div>'--}}
+  {{--                    }--}}
+  {{--              </div>--}}
+  {{--              <div class="mt-2 text-zinc-600 text-sm">--}}
+  {{--                  امتیاز: ${formData.get('rating')}/5--}}
+  {{--              </div>--}}
+  {{--          `;--}}
+  {{--                    commentsContainer.prepend(newComment);--}}
+  {{--                } else {--}}
+  {{--                    alert(response.error || 'خطا در ثبت نظر');--}}
+  {{--                }--}}
+  {{--            })--}}
+  {{--            .catch(err => {--}}
+  {{--                alert('خطا در ارتباط با سرور');--}}
+  {{--                console.error(err);--}}
+  {{--            });--}}
+  {{--    });--}}
+  {{--</script>--}}
 
 </body>
 <script>
@@ -797,6 +1316,340 @@
         });
     });
 </script>
+<!-- اسکریپت ستاره‌ها -->
+<script>
+    const stars = document.querySelectorAll('#ratingStars .star');
+    const ratingValue = document.getElementById('ratingValue');
+    let selectedRating = 0;
+
+    stars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+            const value = star.getAttribute('data-value');
+            highlightStars(value);
+        });
+
+        star.addEventListener('mouseleave', () => {
+            highlightStars(selectedRating);
+        });
+
+        star.addEventListener('click', () => {
+            selectedRating = star.getAttribute('data-value');
+            ratingValue.value = selectedRating;
+            highlightStars(selectedRating);
+        });
+    });
+
+    function highlightStars(rating) {
+        stars.forEach(star => {
+            const value = star.getAttribute('data-value');
+            star.style.color = value <= rating ? '#facc15' : '#d1d5db'; // زرد برای انتخاب‌شده‌ها
+        });
+    }
+</script>
+
+<script>
+    let quantity = 1;
+    const maxStock = {{ $product->stock }};
+
+    // مدیریت دکمه‌های افزایش/کاهش
+    document.querySelectorAll('[data-action="increment"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (quantity < maxStock) {
+                quantity++;
+                document.querySelector('.quantity-container input').value = quantity;
+            }
+        });
+    });
+
+    document.querySelectorAll('[data-action="decrement"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                document.querySelector('.quantity-container input').value = quantity;
+            }
+        });
+    });
+
+    function getQuantity() {
+        return quantity;
+    }
+
+    // ارسال به سبد خرید
+    // ارسال به سبد خرید
+    async function addToCart(productId, qty) {
+        // نمایش لودر در دکمه
+        const buttons = document.querySelectorAll('button[onclick*="addToCart"]');
+        buttons.forEach(btn => {
+            btn.innerHTML = '<span class="loader"></span> در حال افزودن...';
+            btn.disabled = true;
+        });
+
+        try {
+            const res = await fetch('{{ route("cart.add") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: qty
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                showAlert(data.message || 'محصول به سبد خرید اضافه شد', 'success');
+
+                // به‌روزرسانی UI سبد خرید
+                updateCartUI(data);
+
+            } else {
+                showAlert(data.message || 'خطا در افزودن به سبد خرید', 'error');
+            }
+        } catch (e) {
+            console.error(e);
+            showAlert('خطا در ارتباط با سرور', 'error');
+        } finally {
+            // بازگرداندن دکمه به حالت اولیه
+            buttons.forEach(btn => {
+                btn.innerHTML = 'افزودن به سبد خرید';
+                btn.disabled = false;
+            });
+        }
+    }
+
+    // به‌روزرسانی UI سبد خرید
+    function updateCartUI(data) {
+        // به‌روزرسانی تعداد سبد خرید در هدر
+        updateCartCount(data.cart_count || data.total_items);
+
+        // به‌روزرسانی dropdown سبد خرید
+        updateCartDropdown(data.cart_items, data.total_items, data.total_price);
+    }
+
+    // به‌روزرسانی تعداد سبد خرید در هدر
+    function updateCartCount(count) {
+        const cartCountElements = document.querySelectorAll('.cart-count');
+        cartCountElements.forEach(element => {
+            element.textContent = count;
+            if (count > 0) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+            }
+        });
+    }
+
+    // به‌روزرسانی dropdown سبد خرید
+    function updateCartDropdown(cartItems, totalItems, totalPrice) {
+        const cartDropdown = document.getElementById('cart-dropdown');
+
+        if (!cartDropdown) {
+            console.log('Dropdown سبد خرید پیدا نشد');
+            return;
+        }
+
+        let itemsHtml = '';
+
+        if (cartItems && cartItems.length > 0) {
+            itemsHtml = `<ul class="main-scroll h-full space-y-2 divide-y divide-gray-100 overflow-y-auto p-5 pl-2">`;
+
+            cartItems.forEach(item => {
+                itemsHtml += `
+                <li>
+                    <div class="flex gap-x-2 py-5">
+                        <div class="relative min-w-fit">
+                            <a href="/product/${item.product_slug}">
+                                <img alt="${item.product_name}"
+                                     class="h-[120px] w-[120px] rounded-xl object-cover"
+                                     src="${item.product_image}">
+                            </a>
+                        </div>
+                        <div class="w-full space-y-1.5">
+                            <a class="line-clamp-2 h-12 text-zinc-700 font-yekanBakhRegular"
+                               href="/product/${item.product_slug}">
+                                ${item.product_name}
+                            </a>
+                            <div class="flex items-center justify-between gap-x-2">
+                                <div class="text-gray-700">
+                                    <span class="text-sm">${Number(item.product_price).toLocaleString()}</span>
+                                    <span class="text-sm">تومان</span>
+                                </div>
+                                <div class="quantity-container flex h-10 max-w-28 items-center justify-between rounded-lg border border-gray-100 px-2 py-1">
+                                    <button class="cursor-pointer update-cart" type="button"
+                                            data-action="increment"
+                                            data-cart-id="${item.id}">
+                                        <svg class="fill-green-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256">
+                                            <path d="M222,128a6,6,0,0,1-6,6H134v82a6,6,0,0,1-12,0V134H40a6,6,0,0,1,0-12h82V40a6,6,0,0,1,12,0v82h82A6,6,0,0,1,222,128Z"></path>
+                                        </svg>
+                                    </button>
+                                    <input value="${item.quantity}" disabled type="number"
+                                           class="flex h-5 w-full grow select-none items-center justify-center bg-transparent text-center text-sm text-zinc-700 outline-none">
+                                    <button class="cursor-pointer update-cart" type="button"
+                                            data-action="decrement"
+                                            data-cart-id="${item.id}">
+                                        <svg class="fill-red-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256">
+                                            <path d="M222,128a6,6,0,0,1-6,6H40a6,6,0,0,1,0-12H216A6,6,0,0,1,222,128Z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            `;
+            });
+
+            itemsHtml += `</ul>`;
+        } else {
+            itemsHtml = `
+            <div class="h-full flex items-center justify-center text-zinc-500 text-sm p-5">
+                سبد خرید شما خالی است.
+            </div>
+        `;
+        }
+
+        // به‌روزرسانی محتوای dropdown
+        const itemsContainer = cartDropdown.querySelector('.h-60');
+        if (itemsContainer) {
+            itemsContainer.innerHTML = itemsHtml;
+        }
+
+        // به‌روزرسانی تعداد کالاها
+        const totalItemsElement = cartDropdown.querySelector('.text-sm.text-zinc-500');
+        if (totalItemsElement) {
+            totalItemsElement.textContent = `${totalItems} کالا`;
+        }
+
+        // به‌روزرسانی لینک مشاهده سبد خرید
+        const viewCartLink = cartDropdown.querySelector('a[href*="cart"]');
+        if (viewCartLink) {
+            if (totalItems > 0) {
+                viewCartLink.classList.remove('hidden');
+            } else {
+                viewCartLink.classList.add('hidden');
+            }
+        }
+
+        // به‌روزرسانی بخش قیمت
+        const priceSection = cartDropdown.querySelector('.border-t.border-gray-100');
+        if (priceSection) {
+            if (totalItems > 0) {
+                priceSection.classList.remove('hidden');
+
+                // به‌روزرسانی قیمت کل
+                const totalPriceElement = priceSection.querySelector('.font-bold');
+                if (totalPriceElement) {
+                    totalPriceElement.textContent = Number(totalPrice).toLocaleString();
+                }
+            } else {
+                priceSection.classList.add('hidden');
+            }
+        }
+    }
+
+    // تابع نمایش پیام
+    function showAlert(message, type) {
+        // حذف پیام‌های قبلی
+        const existingAlerts = document.querySelectorAll('.custom-alert');
+        existingAlerts.forEach(alert => alert.remove());
+
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `custom-alert fixed top-20 right-4 z-50 p-4 rounded-lg text-white transform transition-all duration-300 ${
+            type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        }`;
+        alertDiv.innerHTML = `
+        <div class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>${message}</span>
+        </div>
+    `;
+        document.body.appendChild(alertDiv);
+
+        // مخفی کردن خودکار بعد از 3 ثانیه
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 3000);
+    }
+    // async function addToCart(productId, qty) {
+    //     // نمایش لودر در دکمه
+    //     const buttons = document.querySelectorAll('button[onclick*="addToCart"]');
+    //     buttons.forEach(btn => {
+    //         btn.innerHTML = '<span class="loader"></span> در حال افزودن...';
+    //         btn.disabled = true;
+    //     });
+    //
+    //     try {
+    //         const res = await fetch('/cart/add', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    //             },
+    //             body: JSON.stringify({ product_id: productId, quantity: qty })
+    //         });
+    //
+    //         const data = await res.json();
+    //
+    //         if (data.success) {
+    //             showAlert('محصول به سبد خرید اضافه شد', 'success');
+    //             // به‌روزرسانی آیکون سبد خرید در هدر (اختیاری)
+    //         } else {
+    //             showAlert(data.message || 'خطا در افزودن به سبد خرید', 'error');
+    //         }
+    //     } catch (e) {
+    //         console.error(e);
+    //         showAlert('خطا در ارتباط با سرور', 'error');
+    //     } finally {
+    //         // بازگرداندن دکمه به حالت اولیه
+    //         buttons.forEach(btn => {
+    //             btn.innerHTML = 'افزودن به سبد خرید';
+    //             btn.disabled = false;
+    //         });
+    //     }
+    // }
+    //
+    // // تابع نمایش پیام
+    // function showAlert(message, type) {
+    //     const alertDiv = document.createElement('div');
+    //     alertDiv.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white transform transition-all duration-300 ${
+    //         type === 'success' ? 'bg-green-500' : 'bg-red-500'
+    //     }`;
+    //     alertDiv.innerHTML = `
+    //         <div class="flex items-center gap-2">
+    //             <span>${message}</span>
+    //             <button onclick="this.parentElement.parentElement.remove()" class="text-lg">&times;</button>
+    //         </div>
+    //     `;
+    //     document.body.appendChild(alertDiv);
+    //     setTimeout(() => alertDiv.remove(), 4000);
+    // }
+
+    // لودر
+    const style = document.createElement('style');
+    style.textContent = `
+        .loader {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+            margin-right: 6px;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+
 <script src="{{ asset('assets/js/swiper.min.js') }}"></script>
 <script src="{{ asset('assets/js/sliders.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
