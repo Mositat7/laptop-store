@@ -11,17 +11,6 @@ class categories extends Model
         'slug',
         'image'
     ];
-
-//    /**
-//     * دسترسی به URL کامل عکس
-//     */
-//    public function getImageUrlAttribute()
-//    {
-//        return $this->image ? asset($this->image) : null;
-//    }
-////    /**
-//     * دسترسی به URL کامل عکس
-//     */
     public function getImageUrlAttribute()
     {
         return $this->image ? asset($this->image) : null;

@@ -186,9 +186,11 @@
                     <span class="text-xs">تومان</span>
                 </div>
             </div>
-            <a href="#" class="w-28 py-3 text-sm bg-primary-600 hover:bg-primary-500 transition text-gray-100 rounded-xl text-center cursor-pointer">
+            <a href="{{ route('checkout.index') }}"
+               class="w-28 py-3 text-sm bg-primary-600 hover:bg-primary-500 transition text-gray-100 rounded-xl text-center">
                 ثبت سفارش
             </a>
+
         </div>
     @endif
 </div>

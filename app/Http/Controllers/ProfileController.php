@@ -6,54 +6,59 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+//use Verta;
 class ProfileController extends Controller
 {
+    private function translateOrderStatus(string $status): string
+    {
+        return match ($status) {
+            'pending' => 'پرداخت شده',
+            'paid' => 'پرداخت شده',
+            'processing' => 'در حال پردازش',
+            'shipped' => 'ارسال شده',
+            'delivered' => 'تحویل شده',
+            'completed' => 'کامل شده',
+            'cancelled' => 'لغو شده',
+            default => $status,
+        };
+    }
     /**
      * نمایش صفحه پروفایل کاربر
      */
     public function index()
     {
-        // بررسی دستی که کاربر لاگین هست
         if (!Auth::check()) {
-            return redirect('/')->with('error', 'لطفا ابتدا وارد شوید');
+            return redirect('/')->with('error', 'لطفاً ابتدا وارد شوید.');
         }
 
         $user = Auth::user();
 
-        // آمار کاربر
+        // آمار کاربر (اگر بخواهی بعداً از دیتابیس بگیری، می‌تونی اینجا هم کوئری بزنی)
         $stats = [
-            'active_orders' => 3,
-            'completed_orders' => 12,
-            'comments' => 5,
-            'open_tickets' => 2,
+            'active_orders' => $user->orders()->whereNotIn('status', ['completed', 'cancelled'])->count(),
+            'completed_orders' => $user->orders()->where('status', 'completed')->count(),
+            'comments' => $user->reviews()->count(), // ✅ تعداد نظرات واقعی
+            'open_tickets' => 0, // اگر سیستم تیکت داری، اینجا هم کوئری بزن
         ];
 
-        // سفارش‌های اخیر
-        $recent_orders = [
-            [
-                'id' => 1001,
-                'date' => '۱۴۰۳/۰۷/۲۳',
-                'amount' => '۱,۲۵۰,۰۰۰',
-                'status' => 'تحویل شده'
-            ],
-            [
-                'id' => 1002,
-                'date' => '۱۴۰۳/۰۷/۲۲',
-                'amount' => '۲,۵۰۰,۰۰۰',
-                'status' => 'در حال ارسال'
-            ],
-            [
-                'id' => 1003,
-                'date' => '۱۴۰۳/۰۷/۲۰',
-                'amount' => '۱,۸۰۰,۰۰۰',
-                'status' => 'تحویل شده'
-            ]
-        ];
+        // ✅ سفارش‌های اخیر از دیتابیس (۳ تا آخرین سفارش)
+        $recent_orders = $user->orders()
+            ->select('id', 'created_at', 'total', 'status')
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get()
+            ->map(function ($order) {
+                return [
+                    'id' => $order->id,
+                    // ✅ تاریخ میلادی ساده — بدون نیاز به پکیج اضافه
+                    'date' => $order->created_at ? $order->created_at->format('Y/m/d') : '—',
+                    'amount' => number_format($order->total),
+                    'status' => $this->translateOrderStatus($order->status),
+                ];
+            });
 
         return view('project.profile', compact('user', 'stats', 'recent_orders'));
     }
-
     /**
      * بروزرسانی اطلاعات پروفایل
      */
@@ -85,4 +90,6 @@ class ProfileController extends Controller
 
         return redirect()->back()->with('success', 'اطلاعات با موفقیت بروزرسانی شد.');
     }
+
+
 }

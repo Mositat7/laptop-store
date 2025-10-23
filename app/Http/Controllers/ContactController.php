@@ -8,7 +8,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('project.contact'); // یا هر اسمی که فایل view تو داره
+        return view('project.contactUs'); // یا هر اسمی که فایل view تو داره
     }
 
     public function store(Request $request)
@@ -22,10 +22,7 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // ذخیره پیام در دیتابیس (اگر مدل Message داری)
-        // Message::create($validated);
 
-        // یا ارسال ایمیل
 
         return back()->with('success', 'پیام شما با موفقیت ارسال شد.');
     }
