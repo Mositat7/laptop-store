@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Color;
+use App\Models\Size;
+use App\Models\Review;
 class Products extends Model
 {
+    protected $table = 'products';
     protected $fillable = [
         'title', 'slug', 'short_description', 'description',
         'brand', 'cpu', 'gpu', 'ram', 'storage', 'display', 'battery',
@@ -60,6 +63,11 @@ class Products extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class, 'product_id');
+    }
+// App\Models\Product.php
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
 }

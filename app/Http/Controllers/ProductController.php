@@ -5,7 +5,8 @@ use App\Models\categories;
 use App\Models\Products;
 use App\Traits\ProductFilterTrait;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\Favorite;
 class ProductController extends Controller
 {
     use ProductFilterTrait;
@@ -70,7 +71,14 @@ class ProductController extends Controller
         $satisfactionPercent = $avgRating
             ? round(($avgRating / 5) * 100)
             : 0;
-        return view('project.singleProduct', compact('product', 'relatedProducts',   'relatedProducts','satisfactionPercent', 'reviews'));
+        // ✅ بررسی اینکه آیا کاربر جاری این محصول را لایک کرده است
+        $isFavorited = false;
+        if (Auth::check()) {
+            $isFavorited = Favorite::where('user_id', Auth::id())
+                ->where('product_id', $product->id)
+                ->exists();
+        }
+        return view('project.singleProduct', compact('product', 'relatedProducts',   'relatedProducts','satisfactionPercent', 'reviews','isFavorited'));
     }
     public function search(Request $request)
     {

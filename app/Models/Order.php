@@ -8,53 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    public $timestamps = true;
     use HasFactory;
-
     protected $fillable = [
-        'user_id',
-        'order_number',
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'postal_code',
-        'address_1',
-        'address_2',
-        'shipping_method',
-        'subtotal',
-        'shipping_cost',
-        'tax',
-        'total',
-        'status',
-        'notes',
+        'user_id', 'order_number', 'first_name', 'last_name',
+        'email', 'phone', 'postal_code', 'address_1', 'address_2',
+        'shipping_method', 'subtotal', 'shipping_cost', 'tax', 'total',
+        'status', 'notes',
     ];
-
-    protected $casts = [
-        'subtotal' => 'decimal:2',
-        'shipping_cost' => 'decimal:2',
-        'tax' => 'decimal:2',
-        'total' => 'decimal:2',
-    ];
-
-    // روابط
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function items()
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    // متدهای کمکی
-    public function getFullNameAttribute()
+    public function user()
     {
-        return trim($this->first_name . ' ' . $this->last_name);
-    }
-
-    public function canBeCancelled()
-    {
-        return in_array($this->status, ['pending', 'processing']);
+        return $this->belongsTo(User::class);
     }
 }

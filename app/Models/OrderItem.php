@@ -9,22 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'order_id',
-        'product_id',
-        'product_name',
-        'quantity',
-        'price',
-        'options',
+        'order_id', 'product_id', 'product_name', 'quantity', 'price', 'options'
     ];
 
     protected $casts = [
-        'price' => 'decimal:2',
         'options' => 'array',
     ];
 
-    // روابط
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -33,11 +25,5 @@ class OrderItem extends Model
     public function product()
     {
         return $this->belongsTo(Products::class);
-    }
-
-    // متدهای کمکی
-    public function getTotalAttribute()
-    {
-        return $this->price * $this->quantity;
     }
 }

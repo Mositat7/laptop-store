@@ -1,81 +1,153 @@
 <?php
-
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ReviewController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    AboutController,
+    AuthController,
+    BlogController,
+    CartController,
+    CategoryController,
+    CheckoutController,
+    ContactController,
+    HomeController,
+    ProductController,
+    ProfileController,
+    ReviewController,
+    FavoriteController
+};
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| تمام مسیرهای وب (غیر API) اینجا تعریف می‌شوند.
+| این فایل ساختاردهی شده تا هم خوانایی بالا بره و هم نگهداری راحت‌تر بشه.
+| هر بخش با توضیح و گروه‌بندی مشخص از هم جدا شده است.
+|
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| 🏠 Public Routes (Accessible without authentication)
+|--------------------------------------------------------------------------
+*/
+
+// صفحه اصلی سایت
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// اضافه کردن route های POST برای احراز هویت
-// Route login برای redirect middleware auth
-//نمایش تعداد ویو
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-Route::post('/api/send-otp', [AuthController::class, 'sendOtp']);
-Route::post('/api/verify-otp', [AuthController::class, 'verifyOtp']);
-//نتیجه سرچ
-Route::get('/search', [ProductController::class, 'search'])->name('search');
-//حارج شدن از حساب
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
-// Route های پروفایل - بدون middleware
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-//مشاهده همه پر فروش ترین و جدیدترین
-Route::get('/products/newest', [ProductController::class, 'newest'])->name('products.newest');
-Route::get('/products/best-selling', [ProductController::class, 'bestSelling'])->name('products.best-selling');
-// صفحه محصول
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('product.show');
-//اضافه کردن محصول
-Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-//آپدیت سبد
-Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-//حذف کردن
-Route::post('/cart/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
-// روت برای نمایش محصولات هر دسته‌بندی
-//Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('categories.show');
-Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
-Route::get('/aboutUs', function () {
-    return view('project.aboutUs');
-});
-// صفحه تماس با ما
-Route::get('/contactUs', [ContactController::class, 'index'])->name('contact');
-Route::post('/contactUs', [ContactController::class, 'store'])->name('contact.store');
-// برای صفحه اصلی مقالات
-Route::get('/blogs', [BlogController::class, 'index'])->name('blog.index');
-// در routes/web.php
-Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
-// صفحه درباره ما
+
+// صفحات عمومی
+Route::view('/aboutUs', 'project.aboutUs')->name('about'); // نسخه استاتیک
+// یا در صورت کنترلر پویا:
 Route::get('/aboutUs', [AboutController::class, 'index'])->name('about');
-////فیلتر مقالع ها
-//Route::get('/blog/filter', [BlogController::class, 'filter'])->name('blog.filter');
-//// برای نمایش مقاله
-//Route::get('/blog/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
-Route::get('/cart', function () {
-    return view('project.blogs');
-});
-Route::get('/checkout', function () {
-    return view('project.checkout');
-});
-Route::get('/contactUs', function () {
-    return view('project.contactUs');
+
+Route::get('/contactUs', [ContactController::class, 'index'])->name('contact');
+
+// نتایج جستجو
+Route::get('/search', [ProductController::class, 'search'])->name('search');
+
+/*
+|--------------------------------------------------------------------------
+| 🛍️ Product & Category Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('products')->group(function () {
+    Route::get('/best-selling', [ProductController::class, 'bestSelling'])->name('products.best-selling');
+    Route::get('/newest', [ProductController::class, 'newest'])->name('products.newest');
+    Route::get('/{product}', [ProductController::class, 'show'])->name('product.show');
 });
 
-Route::get('/dashboard', function () {
-    return view('project.dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+    Route::post('/favorites/toggle/{product}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 });
 
-//Route::get('/profile', function () {
-//    return view('project.profile');
-//})->name('profile')->middleware('auth:sanctum');
-//
-//Route::get('/search', function () {
-//    return view('project.search');
-//});
+// دسته‌بندی‌ها
+Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 
+/*
+|--------------------------------------------------------------------------
+| ✍️ Blog Routes
+|--------------------------------------------------------------------------
+*/
+Route::prefix('blogs')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/{post:slug}', [BlogController::class, 'show'])->name('blog.show');
+});
+
+/*
+|--------------------------------------------------------------------------
+| 💬 Reviews & Feedback
+|--------------------------------------------------------------------------
+*/
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+
+/*
+|--------------------------------------------------------------------------
+| 📲 OTP Authentication (Mobile Login)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('api')->group(function () {
+    Route::post('/send-otp', [AuthController::class, 'sendOtp'])->name('api.sendOtp');
+    Route::post('/verify-otp', [AuthController::class, 'verifyOtp'])->name('api.verifyOtp');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| 🔒 Authenticated Routes (Requires Login)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+
+    /*
+    |--------------------------------------------------------------------------
+    | 👤 User Profile
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('profile');
+        Route::post('/update', [ProfileController::class, 'update'])->name('profile.update');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | 🚪 Logout
+    |--------------------------------------------------------------------------
+    */
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    /*
+    |--------------------------------------------------------------------------
+    | 🛒 Shopping Cart
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('cart')->group(function () {
+        Route::post('/add', [CartController::class, 'addToCart'])->name('cart.add');
+        Route::post('/update', [CartController::class, 'update'])->name('cart.update');
+        Route::post('/remove', [CartController::class, 'removeFromCart'])->name('cart.remove');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | 💳 Checkout & Payment
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('checkout')->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('checkout.index');
+        Route::post('/', [CheckoutController::class, 'store'])->name('checkout.store');
+        Route::post('/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
+        Route::post('/select-address', [CheckoutController::class, 'selectAddress'])->name('checkout.selectAddress');
+        Route::get('/success/{order_number}', [CheckoutController::class, 'success'])->name('checkout.success');
+        Route::get('/complete/{order}', [CheckoutController::class, 'complete'])->name('checkout.complete');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | 📩 Contact Form (Authenticated Users)
+    |--------------------------------------------------------------------------
+    */
+    Route::post('/contactUs', [ContactController::class, 'store'])->name('contact.store');
+});

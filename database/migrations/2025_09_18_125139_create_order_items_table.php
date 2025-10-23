@@ -7,22 +7,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
+    public function up(): void {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->string('product_name'); // نام محصول در زمان سفارش
+            $table->string('product_name');
             $table->integer('quantity')->default(1);
-            $table->decimal('price', 10, 2); // قیمت در زمان سفارش
-            $table->json('options')->nullable(); // options محصول
+            $table->decimal('price', 10, 2);
+            $table->json('options')->nullable(); // رنگ، سایز و ...
             $table->timestamps();
         });
     }
 
-    public function down(): void
-    {
+    public function down(): void {
         Schema::dropIfExists('order_items');
     }
 };

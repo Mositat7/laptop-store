@@ -33,7 +33,10 @@ class User extends Authenticatable
         'cart' => 'array',
         'is_active' => 'boolean',
     ];
-
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
     // روابط
     public function cartItems()
     {

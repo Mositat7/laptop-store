@@ -1,5 +1,4 @@
 <?php
-// app/Models/LoginPhone.php
 
 namespace App\Models;
 

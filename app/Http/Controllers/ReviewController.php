@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
-use App\Models\Review; // ✅ اضافه شد
+use App\Models\Review;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // ✅ اضافه شد
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
@@ -50,19 +50,5 @@ class ReviewController extends Controller
             'rating'            => number_format($product->rating, 1),
             'recommend_percent' => $totalReviews ? round($recommendCount / $totalReviews * 100) : 0,
         ]);
-//        $product = Products::findOrFail($request->product_id);
-//        $avgRating = $product->reviews()->avg('rating');
-//
-//        $product->update([
-//            'reviews_count' => $product->reviews_count + 1,
-//            'rating'        => round($avgRating, 1),
-//        ]);
-//
-//        return response()->json([
-//            'success'       => true,
-//            'message'       => 'نظر شما با موفقیت ثبت شد.',
-//            'reviews_count' => $product->fresh()->reviews_count,
-//            'rating'        => number_format($product->fresh()->rating, 1),
-//        ]);
     }
 }
