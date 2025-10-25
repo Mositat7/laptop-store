@@ -58,10 +58,10 @@ Route::prefix('products')->group(function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+//Route::middleware('auth')->group(function () {
     Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/toggle/{product}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
-});
+//});
 
 // دسته‌بندی‌ها
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');

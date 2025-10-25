@@ -127,6 +127,16 @@
                             </a>
                         </li>
                         <li>
+                            <a class="flex items-center justify-between gap-x-2 rounded-lg p-2 text-zinc-700 hover:text-zinc-800 transition hover:bg-gray-100" href="{{ route('favorites.index') }}">
+                                <div class="flex items-center gap-x-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#4d4d4d" viewBox="0 0 256 256">
+                                        <path d="M224,96a63.84,63.84,0,0,0-42.1-16.17,6,6,0,0,0-5.9,4.13L152,144l-24-60a6,6,0,0,0-11.28,0L92.7,144,68.7,84.13A6,6,0,0,0,62.8,80a63.84,63.84,0,0,0-42.1,16.17A64,64,0,0,0,128,224Z"></path>
+                                    </svg>
+                                    <span>لایک‌شده‌ها</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
                             <a class="flex items-center justify-between gap-x-2 rounded-lg p-2 text-red-500 hover:text-red-600 transition hover:bg-red-100" href="#" onclick="logout()">
                                 <div class="flex items-center gap-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#4d4d4d" viewBox="0 0 256 256">
@@ -161,10 +171,6 @@
             <button class="relative">
         <span class="cursor-pointer">
             <svg width="22px" height="22px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-{{--        <div class="flex items-center py-2 px-2.5 rounded-xl border border-zinc-200 group relative cursor-pointer transition-all hover:shadow-xl">--}}
-{{--            <button class="relative">--}}
-{{--                <span class="cursor-pointer">--}}
-{{--                    <svg width="22px" height="22px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">--}}
                         <g id="Iconly/Light/Bag" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
                             <g class="stroke-gray-800" id="Bag" transform="translate(2.500000, 1.500000)" stroke="#200E32" stroke-width="1.5">
                                 <path d="M14.01373,20.0000001 L5.66590392,20.0000001 C2.59954235,20.0000001 0.247139589,18.8924486 0.915331812,14.4347827 L1.69336385,8.39359272 C2.10526317,6.16933642 3.52402748,5.31807783 4.76887874,5.31807783 L14.9473685,5.31807783 C16.2105264,5.31807783 17.5469108,6.23340964 18.0228834,8.39359272 L18.8009154,14.4347827 C19.3684211,18.3890161 17.0800916,20.0000001 14.01373,20.0000001 Z" id="Path_33955"></path>
