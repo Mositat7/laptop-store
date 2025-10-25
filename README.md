@@ -74,7 +74,14 @@ Follow these steps to run **Digi Star** on your local machine:
 - Composer  
 - MySQL (via XAMPP, Laragon, or native)  
 - Node.js & npm (optional, for asset compilation)
-
+4. **Configure your database in**
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laptop-store
+DB_USERNAME=root
+DB_PASSWORD=
 ### Installation
 1. **Clone the repository**
    ```bash
@@ -85,7 +92,6 @@ Follow these steps to run **Digi Star** on your local machine:
 1. **run
    ```bash
    php artisan migrate --seed
-   ### Run
 1. **Start the server
    ```bash
    php artisan serve
@@ -95,14 +101,6 @@ Follow these steps to run **Digi Star** on your local machine:
     php artisan key:generate
 3.cp .env.example .env
 php artisan key:generate
-4. **Configure your database in**
-```bash
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laptop-store
-DB_USERNAME=root
-DB_PASSWORD=
 
 > 🔧 **Under active development**  
 > 🚀 Built with ❤️ by [Mostafa](https://github.com/Mositat7)
