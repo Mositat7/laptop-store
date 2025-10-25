@@ -86,7 +86,6 @@ DB_PASSWORD=
 1. **Clone the repository**
    ```bash
    git clone https://github.com/Mositat7/laptop-store.git
-   cd laptop-store/laravel
    composer install
 ### Run migrations and seeders
 1. **run
