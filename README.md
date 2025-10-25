@@ -81,6 +81,14 @@ Follow these steps to run **Digi Star** on your local machine:
    git clone https://github.com/Mositat7/laptop-store.git
    cd laptop-store/laravel
    composer install
+### Run migrations and seeders
+1. **run
+   ```bash
+   php artisan migrate --seed
+   ### Run
+1. **Start the server
+   ```bash
+   php artisan serve
 2.**Set up environment**
 ```bash
     cp .env.example .env
