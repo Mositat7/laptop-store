@@ -75,7 +75,7 @@ Follow these steps to run **Digi Star** on your local machine:
 - MySQL (via XAMPP, Laragon, or native)  
 - Node.js & npm (optional, for asset compilation)
 4. **Configure your database in**
-```bash
+###Configure your databas
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
