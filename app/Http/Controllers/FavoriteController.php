@@ -12,6 +12,10 @@ class FavoriteController extends Controller
     public function index()
     {
         $user = Auth::user();
+        // اگر کاربر لاگین نکرده باشد، خطای 404 نمایش داده شود
+        if (!$user) {
+            abort(404);
+        }
         $favorites = Favorite::with('product') // رابطه product باید تو مدل Favorite تعریف باشه
         ->where('user_id', $user->id)
             ->get();
