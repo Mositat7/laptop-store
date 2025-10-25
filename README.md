@@ -39,7 +39,7 @@ Developed by **Mostafa**, a passionate backend developer, Digi Star delivers a s
 ## 🛠️ Tech Stack
 - **Backend**: Laravel (PHP)  
 - **Architecture**: MVC  
-- **Frontend**: Blade, Bootstrap 5  
+- **Frontend**: Blade,Html,Css,Js 
 - **Database**: MySQL  
 - **Local Dev**: XAMPP / `php artisan serve`
 
@@ -49,6 +49,52 @@ Developed by **Mostafa**, a passionate backend developer, Digi Star delivers a s
 Digi Star is designed as a scalable foundation for digital retail—ideal for startups, learning projects, or real-world deployment in the electronics market.
 
 ---
+## 🛣️ Future Roadmap
+
+Digi Star is a living project with significant growth potential. Upcoming enhancements include:
+- ✅ **Admin dashboard** for product & order management  
+- ✅ **Payment gateway integration** (e.g., Stripe, ZarinPal)  
+- ✅ **User order history & tracking**  
+- ✅ **Advanced search with filters** (RAM, storage, CPU, etc.)  
+- ✅ **Email notifications** (order confirmation, shipping updates)  
+- ✅ **API layer** for mobile app or PWA support  
+- ✅ **SEO optimization** and meta tags management  
+- ✅ **Multi-language support** (Persian/English)
+
+Contributions and suggestions are welcome as the platform evolves!
+
+---
+
+## 🚀 Getting Started (Local Setup)
+
+Follow these steps to run **Digi Star** on your local machine:
+
+### Prerequisites
+- PHP 8.1+  
+- Composer  
+- MySQL (via XAMPP, Laragon, or native)  
+- Node.js & npm (optional, for asset compilation)
+
+### Installation
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Mositat7/laptop-store.git
+   cd laptop-store/laravel
+   composer install
+2.**Set up environment**
+```bash
+    cp .env.example .env
+    php artisan key:generate
+3.cp .env.example .env
+php artisan key:generate
+4. **Configure your database in**
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laptop-store
+DB_USERNAME=root
+DB_PASSWORD=
 
 > 🔧 **Under active development**  
 > 🚀 Built with ❤️ by [Mostafa](https://github.com/Mositat7)
