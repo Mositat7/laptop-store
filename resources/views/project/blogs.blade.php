@@ -96,7 +96,7 @@
                       </a>
 
                       @foreach($blogCategories as $category)
-                          <a href="{{ url('/blogs?category=' . $category->slug) }}"
+                          <a href="{{ route('blog.show', $post->slug) ?? '#' }}"
                              class="mx-auto flex gap-x-1 group items-center md:font-semibold text-right w-full px-2 py-3 text-sm cursor-pointer {{ request('category') == $category->slug ? 'bg-primary-500 text-white' : 'text-zinc-700 hover:bg-primary-500 hover:text-white' }} transition rounded-lg">
                               <span class="text-lg">{{ $category->icon }}</span>
                               {{ $category->name }}
@@ -116,7 +116,7 @@
                       @if($blogPosts->count() > 0)
                           @foreach($blogPosts as $post)
                               <div class="card swiper-slide bg-white min-h-60 rounded-2xl border hover:border-primary-500 transition border-zinc-300 group p-2 md:p-3 hover:drop-shadow-lg">
-                                  <a href="{{ url('/blog/' . $post->slug) }}" class="image-box block overflow-hidden rounded-lg md:rounded-2xl">
+                                  <a href="{{ url('/blogs/' . $post->slug) }}" class="image-box block overflow-hidden rounded-lg md:rounded-2xl">
                                       <img class="rounded-lg md:rounded-2xl max-h-56 w-full transition-transform duration-300 ease-in-out group-hover:rotate-3 group-hover:scale-110"
                                            src="{{ asset('assets/image/' . $post->image) }}"
                                            alt="{{ $post->title }}"

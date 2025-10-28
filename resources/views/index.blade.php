@@ -388,13 +388,15 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
 </main>
+<script src="{{ asset('assets/js/swiper.min.js') }}"></script>
+<script src="{{ asset('assets/js/sliders.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 <footer class="bg-white border-t border-zinc-200 w-full px-5 md:px-10 py-5">
     @include('partial/footer')
 </footer>
 </body>
-<script src="{{ asset('assets/js/swiper.min.js') }}"></script>
-<script src="{{ asset('assets/js/sliders.js') }}"></script>
-<script src="{{ asset('assets/js/main.js') }}"></script>
-{{--@include('script/scripts')--}}
 </html>
