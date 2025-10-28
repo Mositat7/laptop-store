@@ -8,6 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function showCart()
+    {
+        $cartData = $this->getCartData();
+        return view('project.cart', [
+            'cartItems' => $cartData['items'],
+            'totalPrice' => $cartData['total_price'],
+            'totalItems' => $cartData['total_items']
+        ]);
+    }
     public function update(Request $request)
     {
         $request->validate([

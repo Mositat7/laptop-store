@@ -31,20 +31,6 @@
 
 <main class="pt-32 min-h-screen">
     <div class="container mx-auto px-6">
-
-{{--        <!-- هدر صفحه -->--}}
-{{--        <div class="bg-white rounded-xl shadow-sm p-6 mb-8">--}}
-{{--            <div class="flex justify-between items-center">--}}
-{{--                <div>--}}
-{{--                    <h1 class="text-2xl font-bold text-gray-900 mb-2">پرفروش‌ترین محصولات</h1>--}}
-{{--                    <p class="text-gray-600">محصولات پرفروش و محبوب</p>--}}
-{{--                </div>--}}
-{{--                <div class="bg-blue-50 text-blue-700 px-5 py-2 rounded-lg">--}}
-{{--                    <span class="text-xl font-bold">{{ $products->total() }}</span>--}}
-{{--                    <span class="text-base">محصول</span>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
         <div class="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 mb-10 border border-zinc-100">
             <div class="flex justify-between items-center">
                 <!-- عنوان و توضیح -->
@@ -76,57 +62,6 @@
         </div>
 
         <div class="flex gap-8">
-
-            <!-- سایدبار فیلتر -->
-{{--            <div class="desktop-sidebar">--}}
-{{--                <div class="bg-white rounded-xl shadow-sm p-5 sticky top-32">--}}
-{{--                    <h2 class="text-lg font-bold text-gray-900 mb-5 border-b pb-3">فیلتر محصولات</h2>--}}
-
-{{--                    <!-- فیلتر دسته‌بندی‌ها -->--}}
-{{--                    <div class="mb-5">--}}
-{{--                        <h3 class="font-semibold text-gray-800 mb-3">دسته‌بندی‌ها</h3>--}}
-{{--                        <div class="space-y-1 max-h-80 overflow-y-auto">--}}
-{{--                            @foreach($mainCategories as $mainCat)--}}
-{{--                                <a href="{{ route('category.show', $mainCat->slug) }}"--}}
-{{--                                   class="flex items-center justify-between w-full px-3 py-2 rounded-lg text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-all">--}}
-{{--                                    <span class="font-medium">{{ $mainCat->name }}</span>--}}
-{{--                                    <span class="bg-gray-100 text-gray-500 text-xs px-2 py-1 rounded-full">{{ $mainCat->products_count ?? 0 }}</span>--}}
-{{--                                </a>--}}
-{{--                            @endforeach--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-{{--                    <!-- فیلتر برندها -->--}}
-{{--                    <div class="mb-5">--}}
-{{--                        <h3 class="font-semibold text-gray-800 mb-3">برندها</h3>--}}
-{{--                        <div class="space-y-2">--}}
-{{--                            @foreach(['اپل', 'سامسونگ', 'هواوی', 'شیائومی', 'سونی', 'ال جی'] as $brand)--}}
-{{--                                <label class="flex items-center gap-2 cursor-pointer group">--}}
-{{--                                    <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">--}}
-{{--                                    <span class="text-gray-700 group-hover:text-blue-600 text-sm">{{ $brand }}</span>--}}
-{{--                                </label>--}}
-{{--                            @endforeach--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-{{--                    <!-- فیلتر قیمت -->--}}
-{{--                    <div class="mb-4">--}}
-{{--                        <h3 class="font-semibold text-gray-800 mb-3">محدوده قیمت</h3>--}}
-{{--                        <div class="space-y-3">--}}
-{{--                            <div class="flex flex-col gap-3">--}}
-{{--                                <input type="number" placeholder="حداقل"--}}
-{{--                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">--}}
-{{--                                <input type="number" placeholder="حداکثر"--}}
-{{--                                       class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500">--}}
-{{--                            </div>--}}
-
-{{--                            <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-semibold text-sm">--}}
-{{--                                اعمال فیلتر--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
 @include('helper/filter-products')
             <!-- محتوای اصلی -->
             <div class="desktop-content">

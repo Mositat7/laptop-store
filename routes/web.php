@@ -35,7 +35,6 @@ use App\Http\Controllers\{
 
 // صفحه اصلی سایت
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
 // صفحات عمومی
 Route::view('/aboutUs', 'project.aboutUs')->name('about'); // نسخه استاتیک
 // یا در صورت کنترلر پویا:
@@ -124,6 +123,7 @@ Route::middleware('auth')->group(function () {
     | 🛒 Shopping Cart
     |--------------------------------------------------------------------------
     */
+    Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
     Route::prefix('cart')->group(function () {
         Route::post('/add', [CartController::class, 'addToCart'])->name('cart.add');
         Route::post('/update', [CartController::class, 'update'])->name('cart.update');

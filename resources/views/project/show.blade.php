@@ -31,20 +31,6 @@
 
 <main class="pt-32 min-h-screen">
     <div class="container mx-auto px-6">
-
-{{--        <!-- هدر دسته‌بندی -->--}}
-{{--        <div class="bg-white rounded-xl shadow-sm p-6 mb-8">--}}
-{{--            <div class="flex justify-between items-center">--}}
-{{--                <div>--}}
-{{--                    <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ $category->name }}</h1>--}}
-{{--                    <p class="text-gray-600">محصولات با کیفیت در دسته‌بندی {{ $category->name }}</p>--}}
-{{--                </div>--}}
-{{--                <div class="bg-blue-50 text-blue-700 px-5 py-2 rounded-lg">--}}
-{{--                    <span class="text-xl font-bold">{{ $products->total() }}</span>--}}
-{{--                    <span class="text-base">محصول</span>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
         <!-- هدر دسته‌بندی -->
         <div class="bg-gradient-to-r from-white to-blue-50 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 p-6 mb-10 border border-zinc-100">
             <div class="flex justify-between items-center">

@@ -137,12 +137,12 @@
             </div>
             <div class="">
                 <ul class="flex flex-col gap-y-5">
-                    <a href="#">
+                    <a href="/blogs">
                         <li class="text-zinc-400 hover:text-primary-500 transition-all text-xs hover:pr-1 ease-out duration-300">
                             وبلاگ
                         </li>
                     </a>
-                    <a href="#">
+                    <a href="/aboutUs">
                         <li class="text-zinc-400 hover:text-primary-500 transition-all text-xs hover:pr-1 ease-out duration-300">
                             درباره ما
                         </li>
