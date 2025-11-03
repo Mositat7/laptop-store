@@ -550,8 +550,11 @@
             <ul class="treeview-menu">
                 <li><a href="pages/contact_app_chat.html"><i class="mdi mdi-toggle-switch-off"></i>Chat app</a></li>
                 {{--            <li><a href="pages/contact_app.html"><i class="mdi mdi-toggle-switch-off"></i>Contact / Employee</a></li>--}}
-                <li><a href="pages/contact_userlist_grid.html"><i class="mdi mdi-toggle-switch-off"></i>Userlist Grid</a></li>
-                <li><a href="pages/contact_userlist.html"><i class="mdi mdi-toggle-switch-off"></i>Userlist</a></li>
+                <li>
+                    <a href="{{ route('admin.contact_userlist.grid') }}">
+                        <i class="mdi mdi-toggle-switch-off"></i> Userlist Grid
+                    </a>
+                </li>
             </ul>
         </li>
 
