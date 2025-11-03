@@ -447,12 +447,19 @@
                                           <img src="{{ asset($product->main_image) }}" alt="{{ $product->title }}">
                                       </div>
 
-                                      @if(!empty($product->gallery_images))
-                                          @foreach(json_decode($product->gallery_images) as $image)
-                                              <div class="photos-item">
-                                                  <img src="{{ asset($image) }}" alt="{{ $product->title }}">
-                                              </div>
-                                          @endforeach
+                                      @php
+                                          $gallery = json_decode($product->gallery, true);
+                                      @endphp
+
+                                      @if(!empty($gallery))
+                                          <div class="row mt-3">
+{{--                                              <h4 class="box-title">Gallery</h4>--}}
+                                              @foreach($gallery as $image)
+                                                  <div class="col-md-3 mb-3">
+                                                      <img src="{{ asset($image) }}" alt="Gallery Image" class="img-thumbnail" width="120">
+                                                  </div>
+                                              @endforeach
+                                          </div>
                                       @endif
                                   </div>
                               </div>
