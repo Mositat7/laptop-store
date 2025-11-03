@@ -14,8 +14,85 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Products::latest()->get();
+        $products = Products::latest()->paginate(9);
         return view('admin.pages.ecommerce_products', compact('products'));
+    }
+    // فرم افزودن محصول
+    public function create()
+    {
+        // گرفتن اطلاعات برای select ها و checkbox ها
+        $brands = Brands::all();
+        $categories = categories::all();
+        $colors = Color::all();
+        $sizes = Size::all();
+
+        return view('admin.pages.ecommerce_products_create', compact(
+            'brands', 'categories', 'colors', 'sizes'
+        ));
+    }
+    // ذخیره محصول جدید
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:products,slug',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+            'main_image' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+            'gallery.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
+        ]);
+
+        $product = new Product();
+        $product->title = $request->title;
+        $product->slug = $request->slug;
+        $product->short_description = $request->short_description;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->discount_price = $request->discount_price;
+        $product->brand_id = $request->brand_id;
+        $product->category_id = $request->category_id;
+        $product->cpu = $request->cpu;
+        $product->gpu = $request->gpu;
+        $product->ram = $request->ram;
+        $product->storage = $request->storage;
+        $product->display = $request->display;
+        $product->battery = $request->battery;
+        $product->quantity = $request->quantity;
+        $product->stock = $request->stock;
+        $product->is_active = $request->is_active ?? 0;
+        $product->is_featured = $request->is_featured ?? 0;
+        $product->meta_keywords = $request->meta_keywords;
+
+        // main image
+        if ($request->hasFile('main_image')) {
+            $file = $request->file('main_image');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/products'), $filename);
+            $product->main_image = 'assets/images/products/' . $filename;
+        }
+
+// gallery
+        if ($request->hasFile('gallery')) {
+            $gallery = [];
+            foreach ($request->file('gallery') as $file) {
+                $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('assets/images/products'), $filename);
+                $gallery[] = 'assets/images/products/' . $filename; // ✅ مسیر فایل را ذخیره کن
+            }
+            $product->gallery = json_encode($gallery); // ✅ JSON رشته ذخیره شود
+        }
+        $product->save();
+
+        // attach colors and sizes
+        if ($request->colors) {
+            $product->colors()->sync($request->colors);
+        }
+        if ($request->sizes) {
+            $product->sizes()->sync($request->sizes);
+        }
+
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully!');
     }
 
     public function show($id)
@@ -26,11 +103,31 @@ class ProductController extends Controller
     }
     public function update(Request $request, $id)
     {
-        // پیدا کردن محصول
         $product = Products::findOrFail($id);
 
-        // بروزرسانی فیلدهای اصلی محصول
-        $product->update($request->except(['colors', 'sizes']));
+        // بروزرسانی فیلدهای اصلی به جز تصاویر و رنگ و سایز
+        $product->update($request->except(['colors', 'sizes', 'main_image', 'gallery']));
+
+        // main_image
+        if ($request->hasFile('main_image')) {
+            $file = $request->file('main_image');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/products'), $filename);
+            $product->main_image = 'assets/images/products/' . $filename;
+        }
+
+        // gallery
+        if ($request->hasFile('gallery')) {
+            $gallery = [];
+            foreach ($request->file('gallery') as $file) {
+                $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('assets/images/products'), $filename);
+                $gallery[] = 'assets/images/products/' . $filename;
+            }
+            $product->gallery = json_encode($gallery);
+        }
+
+        $product->save();
 
         // بروزرسانی رنگ‌ها
         if ($request->has('colors')) {
@@ -50,6 +147,7 @@ class ProductController extends Controller
             ->route('admin.products.index')
             ->with('success', 'Product updated successfully!');
     }
+
     public function edit($id)
     {
         $colors = Color::all();

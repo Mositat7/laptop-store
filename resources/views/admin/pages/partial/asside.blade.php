@@ -640,7 +640,15 @@
                         <i class="mdi mdi-toggle-switch-off"></i> Products
                     </a>
                 </li>
-{{--                <li>--}}
+                <li>
+                    <a href="{{ route('admin.products.create') }}">
+                        <i class="mdi mdi-plus-box-outline"></i> Add Product
+                    </a>
+                </li>
+
+
+
+                {{--                <li>--}}
 {{--                    <a href="ecommerce_cart.html"><i class="mdi mdi-toggle-switch-off"></i>Products Cart</a>--}}
 {{--                </li>--}}
                 {{--                <li>--}}

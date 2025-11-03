@@ -280,7 +280,7 @@
                                     <div class="col-md-6">
                                         <h4 class="box-title mt-20">Main Image</h4>
                                         <div class="product-img text-left">
-                                            <img src="{{ asset($product->main_image ?? 'assets/images/product-placeholder.png') }}" alt="" width="150">
+                                            <img src="{{ asset(is_array($product->main_image) ? ($product->main_image[0] ?? 'assets/images/product-placeholder.png') : ($product->main_image ?? 'assets/images/product-placeholder.png')) }}" alt="" width="150">
                                             <div class="fileupload btn btn-outline btn-success mt-2">
                                                 <span><i class="ion-upload mr-5"></i>Upload New Image</span>
                                                 <input type="file" class="upload" name="main_image">
@@ -294,14 +294,21 @@
                                             <span><i class="ion-images mr-5"></i>Upload Gallery Images</span>
                                             <input type="file" class="upload" name="gallery[]" multiple>
                                         </div>
-
                                         @php
-                                            $gallery = json_decode($product->gallery, true);
+                                            $gallery = $product->gallery;
+
+                                            if (is_string($gallery)) {
+                                                $gallery = json_decode($gallery, true) ?: [];
+                                            }
+
+                                            // اگر هنوز هم چندبعدی است، یک بعدی می‌کنیم
+                                            $gallery = array_map(function($item) {
+                                                return is_array($item) ? reset($item) : $item;
+                                            }, $gallery);
                                         @endphp
 
                                         @if(!empty($gallery))
                                             <div class="row mt-3">
-                                                <h4 class="box-title">Gallery</h4>
                                                 @foreach($gallery as $image)
                                                     <div class="col-md-3 mb-3">
                                                         <img src="{{ asset($image) }}" alt="Gallery Image" class="img-thumbnail" width="120">
@@ -309,6 +316,8 @@
                                                 @endforeach
                                             </div>
                                         @endif
+
+
                                     </div>
                                 </div>
 
