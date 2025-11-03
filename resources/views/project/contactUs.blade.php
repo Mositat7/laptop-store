@@ -5,14 +5,12 @@
 @endif
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
-<!-- Mirrored from amirtttk.ir/digiStar/contactUs.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 12:54:03 GMT -->
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 
   <title>فروشگاه دیجی استار</title>
 </head>
@@ -85,6 +83,4 @@
 <script src="{{ asset('assets/js/sliders.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 {{--@include('script/scripts')--}}>
-
-<!-- Mirrored from amirtttk.ir/digiStar/contactUs.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 12:54:03 GMT -->
 </html>

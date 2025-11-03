@@ -714,6 +714,4 @@
   <script src="{{ asset('assets/js/script-page.js') }}"></script>
 
 </body>
-
-<!-- Mirrored from amirtttk.ir/digiStar/singleProduct.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 12:54:04 GMT -->
 </html>

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
-<!-- Mirrored from amirtttk.ir/digiStar/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 12:53:47 GMT -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">

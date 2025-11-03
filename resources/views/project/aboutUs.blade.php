@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
-<!-- Mirrored from amirtttk.ir/digiStar/aboutUs.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 12:54:03 GMT -->
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +39,4 @@
 <script src="{{ asset('assets/js/sliders.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 {{--@include('script/scripts')--}}
-
-
-<!-- Mirrored from amirtttk.ir/digiStar/aboutUs.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 07 Oct 2025 12:54:03 GMT -->
 </html>
