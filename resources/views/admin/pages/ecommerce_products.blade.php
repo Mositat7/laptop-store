@@ -152,16 +152,11 @@
 
 	<!-- SlimScroll -->
 	<script src="{{asset('assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-
 	<!-- FastClick -->
 	<script src="{{asset('assets/vendor_components/fastclick/lib/fastclick.js')}}"></script>
-
 	<!-- Superieur Admin App -->
 	<script src="{{asset('js/template.js')}}"></script>
-
 	<!-- Superieur Admin for demo purposes -->
 	<script src="{{asset('js/demo.js')}}"></script>
-
-
 </body>
 </html>

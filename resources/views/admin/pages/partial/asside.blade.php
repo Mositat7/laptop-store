@@ -717,22 +717,21 @@
 
         <li class="treeview">
             <a href="#">
-                <i class="mdi mdi-file"></i>
-                <span>Sample Pages</span>
+                <i class="mdi mdi-palette"></i>
+                <span>مدیریت رنگ‌ها</span>
                 <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
+            <i class="fa fa-angle-right pull-right"></i>
+        </span>
             </a>
             <ul class="treeview-menu">
-                {{--            <li><a href="pages/sample_blank.html"><i class="mdi mdi-toggle-switch-off"></i>Blank</a></li>--}}
-                {{--            <li><a href="pages/sample_coming_soon.html"><i class="mdi mdi-toggle-switch-off"></i>Coming Soon</a></li>--}}
-                {{--            <li><a href="pages/sample_custom_scroll.html"><i class="mdi mdi-toggle-switch-off"></i>Custom Scrolls</a></li>--}}
-                <li><a href="pages/sample_faq.html"><i class="mdi mdi-toggle-switch-off"></i>FAQ</a></li>
-                {{--         <li><a href="pages/sample_gallery.html"><i class="mdi mdi-toggle-switch-off"></i>Gallery</a></li>--}}
-                {{--         <li><a href="pages/sample_lightbox.html"><i class="mdi mdi-toggle-switch-off"></i>Lightbox Popup</a></li>--}}
-                {{--         <li><a href="pages/sample_pricing.html"><i class="mdi mdi-toggle-switch-off"></i>Pricing</a></li>--}}
+                <li>
+                    <a href="{{ route('admin.colors.index') }}">
+                        <i class="mdi mdi-toggle-switch-off"></i> لیست رنگ‌ها
+                    </a>
+                </li>
             </ul>
         </li>
+
 
 
         <li class="header nav-small-cap"><i class="mdi mdi-drag-horizontal mr-5"></i>EXTRA</li>

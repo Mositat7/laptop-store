@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\ContactUserController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Models\User;
@@ -38,4 +39,13 @@ Route::prefix('pages')->group(function () {
 
     // حذف محصول
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+});
+
+Route::prefix('colors')->name('colors.')->group(function () {
+    Route::get('/', [ColorController::class, 'index'])->name('index');
+    Route::get('/create', [ColorController::class, 'create'])->name('create');
+    Route::post('/', [ColorController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [ColorController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [ColorController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ColorController::class, 'destroy'])->name('destroy');
 });
