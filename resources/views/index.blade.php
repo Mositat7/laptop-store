@@ -309,7 +309,7 @@
                                             {{--                                  href="{{ url('/products?brand=' . $brand->slug) }}"--}}
                                             <a  class="flex flex-col justify-between items-center gap-3 w-full h-36 md:h-48 md:px-4 border border-zinc-100 rounded-2xl hover:shadow-lg transition">
                                                 <div class="w-full h-44 flex justify-center items-center">
-                                                    <img class="max-w-24 md:max-w-32 w-full mx-auto" src="{{ asset('assets/image/' . $brand->logo) }}" alt="{{ $brand->name }}" onerror="this.src='{{ asset('assets/image/placeholder.jpg') }}'">
+                                                    <img class="max-w-24 md:max-w-32 w-full mx-auto" src="{{ asset('assets/image/' . $brand->logo) }}"  alt="{{ $brand->name }}" onerror="this.src='{{ asset('assets/image/placeholder.jpg') }}'">
                                                 </div>
                                                 <p class="text-xs md:text-sm text-zinc-700 h-16">
                                                     {{ $brand->name }}

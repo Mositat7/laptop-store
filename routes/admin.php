@@ -12,18 +12,8 @@ Route::get('/', function () {
     return view('admin.index-6');
 })->name('dashboard');
 
-//Route::get('pages/ecommerce_products_edit', function () {
-//    return view('admin.pages.ecommerce_products_edit');
-//});
 Route::get('pages/contact_userlist_grid', [ContactUserController::class, 'index'])
     ->name('contact_userlist.grid');
-//Route::prefix('pages')->group(function () {
-//    Route::get('/ecommerce_products', [ProductController::class, 'index'])->name('products.index');
-//    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
-//    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-//    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-//    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
-//});
 Route::prefix('pages')->group(function () {
 
     // لیست محصولات
@@ -61,7 +51,12 @@ Route::prefix('colors')->name('colors.')->group(function () {
 Route::prefix('brands')->name('brands.')->group(function () {
     Route::get('/', [BrandController::class, 'index'])->name('index');
     Route::post('/', [BrandController::class, 'store'])->name('store');
-    Route::get('/{id}/edit', [BrandController::class, 'edit'])->name('edit');
     Route::put('/{id}', [BrandController::class, 'update'])->name('update');
     Route::delete('/{id}', [BrandController::class, 'destroy'])->name('destroy');
+});
+Route::prefix('categories')->name('categories.')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('index');
+    Route::post('/', [CategoryController::class, 'store'])->name('store');
+    Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
