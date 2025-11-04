@@ -3,83 +3,95 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\categories;
 use Illuminate\Http\Request;
-use App\Models\Category;
 use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::latest()->get();
-        return view('admin.pages.categories.index', compact('categories'));
+        $editingCategory = null;
+        if ($request->has('edit_id')) {
+            $editingCategory = categories::find($request->edit_id);
+        }
+
+        $categories = categories::orderBy('id', 'desc')->get();
+        return view('admin.pages.categories', compact('categories', 'editingCategory'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'name' => 'required|string|max:255',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        $category = new Category();
+        $category = new categories();
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
 
-        // 📁 ذخیره عکس در storage/app/public/categories
         if ($request->hasFile('image')) {
-            $file     = $request->file('image');
+            $file = $request->file('image');
             $filename = time() . '-' . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/categories', $filename);
-            $category->image = 'categories/' . $filename;
+            $destinationPath = public_path('storage/categories');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $file->move($destinationPath, $filename);
+            $category->image = 'storage/categories/' . $filename;
         }
 
         $category->save();
 
-        return redirect()->route('admin.categories.index')->with('success', 'دسته‌بندی با موفقیت اضافه شد.');
+        return redirect()->back()->with('success', 'دسته‌بندی با موفقیت اضافه شد.');
     }
 
-    public function edit($id)
-    {
-        $category = Category::findOrFail($id);
-        return view('admin.pages.categories.edit', compact('category'));
-    }
+    // ❌ متد edit حذف شده — نیازی نیست
 
     public function update(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
-
         $request->validate([
-            'name'  => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'name' => 'required|string|max:255',
+            'image' => 'nullable|image|max:2048',
         ]);
 
+        $category = categories::findOrFail($id);
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
 
         if ($request->hasFile('image')) {
-            $file     = $request->file('image');
+            if ($category->image && file_exists(public_path($category->image))) {
+                unlink(public_path($category->image));
+            }
+
+            $file = $request->file('image');
             $filename = time() . '-' . Str::slug($request->name) . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/categories', $filename);
-            $category->image = 'categories/' . $filename;
+            $destinationPath = public_path('storage/categories');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $file->move($destinationPath, $filename);
+            $category->image = 'storage/categories/' . $filename;
         }
 
         $category->save();
 
-        return redirect()->route('admin.categories.index')->with('success', 'دسته‌بندی با موفقیت ویرایش شد.');
+        return redirect()->back()->with('success', 'دسته‌بندی با موفقیت ویرایش شد.');
     }
 
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-
-        if ($category->image && file_exists(storage_path('app/public/' . $category->image))) {
-            unlink(storage_path('app/public/' . $category->image));
+        $category = categories::findOrFail($id);
+        if ($category->image && file_exists(public_path($category->image))) {
+            unlink(public_path($category->image));
         }
-
         $category->delete();
 
-        return redirect()->route('admin.categories.index')->with('success', 'دسته‌بندی حذف شد.');
+        return redirect()->back()->with('success', 'دسته‌بندی حذف شد.');
     }
 }
-

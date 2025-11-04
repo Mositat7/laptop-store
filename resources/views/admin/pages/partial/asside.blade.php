@@ -763,6 +763,23 @@
                 </li>
             </ul>
         </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="mdi mdi-shape-outline"></i>
+                <span>Category management</span>
+                <span class="pull-right-container">
+            <i class="fa fa-angle-right pull-right"></i>
+        </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="{{ route('admin.categories.index') }}">
+                        <i class="mdi mdi-format-list-bulleted"></i> List of categories
+                    </a>
+                </li>
+            </ul>
+        </li>
+
 
 
         <li class="header nav-small-cap"><i class="mdi mdi-drag-horizontal mr-5"></i>EXTRA</li>
