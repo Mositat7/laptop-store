@@ -1,98 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{{asset('images/favicon.ico')}}">
+    <title>مدیریت برندها | پنل ادمین</title>
 
-    <title>Superieur Admin - Dashboard  Blank Page </title>
-
-    <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="{{asset('assets/vendor_components/bootstrap/dist/css/bootstrap.min.css')}}">
-
-    <!-- Bootstrap extend-->
-    <link rel="stylesheet" href="{{asset('css/bootstrap-extend.css')}}">
-
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('css/master_style.css')}}">
-
-    <!-- Superieur Admin skins -->
-    <link rel="stylesheet" href="{{asset('css/skins/_all-skins.css')}}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/vendor_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-extend.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/master_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/skins/_all-skins.css') }}">
 </head>
+
 <body class="hold-transition skin-info-light fixed sidebar-mini rtl">
-<div class="container">
-    <h2>Brands</h2>
+<div class="wrapper">
 
-    <form action="{{ route('admin.brands.store') }}" method="POST" class="mb-4">
-        @csrf
-        <div class="input-group">
-            <input type="text" name="name" class="form-control" placeholder="Brand Name" required>
-            <button class="btn btn-primary">Add Brand</button>
-        </div>
-    </form>
+    <header class="main-header">
+        @include('admin.pages.partial.header')
+    </header>
 
-    <table class="table table-bordered">
-        <thead>
-        <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
-        </thead>
-        <tbody>
-        @foreach($brands as $brand)
-            <tr>
-                <td>{{ $brand->id }}</td>
-                <td>{{ $brand->name }}</td>
-                <td>
-                    <a href="{{ route('admin.brands.edit', $brand->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('admin.brands.destroy', $brand->id) }}" method="POST" style="display:inline;">
+    <aside class="main-sidebar">
+        @include('admin.pages.partial.asside')
+    </aside>
+
+    <div class="content-wrapper p-4">
+        <div class="container-fluid">
+            <h2 class="text-center mb-4">مدیریت برندها</h2>
+
+            @if(session('success'))
+                <div class="alert alert-success text-center">{{ session('success') }}</div>
+            @endif
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="card mb-4 shadow">
+                <div class="card-header bg-primary text-white">افزودن برند جدید</div>
+                <div class="card-body">
+                    <form action="{{ route('admin.brands.store') }}" method="POST" enctype="multipart/form-data" class="row g-3 align-items-center">
                         @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">Delete</button>
+                        <div class="col-md-4">
+                            <label class="form-label">نام برند</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">لوگو</label>
+                            <input type="file" name="logo" class="form-control" accept="image/*" required>
+                        </div>
+
+                        <div class="col-md-2 text-center">
+                            <label class="form-label d-block">وضعیت</label>
+                            <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" checked>
+                            <label class="form-check-label" for="is_active">فعال</label>
+                        </div>
+
+                        <div class="col-md-2 mt-4">
+                            <button type="submit" class="btn btn-success w-100">افزودن برند</button>
+                        </div>
                     </form>
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+                </div>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">لیست برندها</div>
+                <div class="card-body p-0">
+                    <table class="table table-striped table-hover mb-0 text-center align-middle">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>لوگو</th>
+                            <th>نام برند</th>
+                            <th>وضعیت</th>
+                            <th>ترتیب</th>
+                            <th>وب‌سایت</th>
+                            <th>عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($brands as $brand)
+                            <tr>
+                                <td>{{ $brand->id }}</td>
+                                <td>
+                                    @if($brand->logo)
+                                        <img src="{{ asset($brand->logo) }}" width="60" height="60">
+
+                                    @else
+                                        <span class="text-muted">ندارد</span>
+                                    @endif
+                                </td>
+                                <td>{{ $brand->name }}</td>
+                                <td>{!! $brand->is_active ? '<span class="badge bg-success">فعال</span>' : '<span class="badge bg-danger">غیرفعال</span>' !!}</td>
+                                <td>{{ $brand->order }}</td>
+                                <td>
+                                    @if($brand->website)
+                                        <a href="{{ $brand->website }}" target="_blank">{{ parse_url($brand->website)['host'] }}</a>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.brands.edit', $brand->id) }}" class="btn btn-warning btn-sm">ویرایش</a>
+                                    <form action="{{ route('admin.brands.destroy', $brand->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('آیا از حذف این برند مطمئن هستید؟')">حذف</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="7" class="text-center text-muted">هیچ برندی ثبت نشده است.</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="main-footer text-center mt-5">
+        @include('admin.pages.partial.footer')
+    </footer>
 </div>
-
-<footer class="main-footer">
-    @include('admin.pages.partial.footer')
-</footer>
-<!-- /.control-sidebar -->
-
-<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-<div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
-
-
-<!-- jQuery 3 -->
-<script src="{{asset('assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js')}}"></script>
-
-<!-- popper -->
-<script src="{{asset('assets/vendor_components/popper/dist/popper.min.js')}}"></script>
-
-<!-- Bootstrap 4.0-->
-<script src="{{asset('assets/vendor_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-
-<!-- SlimScroll -->
-<script src="{{asset('assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{asset('assets/vendor_components/fastclick/lib/fastclick.js')}}"></script>
-<!-- Superieur Admin App -->
-<script src="{{asset('js/template.js')}}"></script>
-<!-- Superieur Admin for demo purposes -->
-<script src="{{asset('js/demo.js')}}"></script>
+<!-- Scripts -->
+<script src="{{ asset('assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/popper/dist/popper.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/fastclick/lib/fastclick.js') }}"></script>
+<script src="{{ asset('js/template.js') }}"></script>
+<script src="{{ asset('js/demo.js') }}"></script>
 </body>
 </html>
-

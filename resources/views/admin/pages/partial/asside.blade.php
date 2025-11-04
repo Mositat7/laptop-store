@@ -718,7 +718,7 @@
         <li class="treeview">
             <a href="#">
                 <i class="mdi mdi-palette"></i>
-                <span>مدیریت رنگ‌ها</span>
+                <span>Color management</span>
                 <span class="pull-right-container">
             <i class="fa fa-angle-right pull-right"></i>
         </span>
@@ -726,12 +726,43 @@
             <ul class="treeview-menu">
                 <li>
                     <a href="{{ route('admin.colors.index') }}">
-                        <i class="mdi mdi-toggle-switch-off"></i> لیست رنگ‌ها
+                        <i class="mdi mdi-toggle-switch-off"></i> List of colors
                     </a>
                 </li>
             </ul>
         </li>
-
+        <li class="treeview">
+            <a href="#">
+                <i class="mdi mdi-ruler-square"></i>
+                <span>Size management</span>
+                <span class="pull-right-container">
+            <i class="fa fa-angle-right pull-right"></i>
+        </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="{{ route('admin.sizes.index') }}">
+                        <i class="mdi mdi-toggle-switch-off"></i> List of sizes
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview">
+            <a href="#">
+                <i class="mdi mdi-tag-multiple"></i>
+                <span>Brand management</span>
+                <span class="pull-right-container">
+            <i class="fa fa-angle-right pull-right"></i>
+        </span>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="{{ route('admin.brands.index') }}">
+                        <i class="mdi mdi-toggle-switch-off"></i> List of brands
+                    </a>
+                </li>
+            </ul>
+        </li>
 
 
         <li class="header nav-small-cap"><i class="mdi mdi-drag-horizontal mr-5"></i>EXTRA</li>
