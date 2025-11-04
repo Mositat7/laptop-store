@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\ContactUserController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
@@ -48,4 +51,17 @@ Route::prefix('colors')->name('colors.')->group(function () {
     Route::get('/{id}/edit', [ColorController::class, 'edit'])->name('edit');
     Route::put('/{id}', [ColorController::class, 'update'])->name('update');
     Route::delete('/{id}', [ColorController::class, 'destroy'])->name('destroy');
+});
+    Route::prefix('sizes')->name('sizes.')->group(function () {
+        Route::get('/', [SizeController::class, 'index'])->name('index');
+        Route::post('/', [SizeController::class, 'store'])->name('store');
+        Route::put('/{id}', [SizeController::class, 'update'])->name('update');
+        Route::delete('/{id}', [SizeController::class, 'destroy'])->name('destroy');
+});
+Route::prefix('brands')->name('brands.')->group(function () {
+    Route::get('/', [BrandController::class, 'index'])->name('index');
+    Route::post('/', [BrandController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [BrandController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [BrandController::class, 'update'])->name('update');
+    Route::delete('/{id}', [BrandController::class, 'destroy'])->name('destroy');
 });

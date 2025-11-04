@@ -1,97 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{{asset('images/favicon.ico')}}">
+    <title>مدیریت سایزها | پنل ادمین</title>
 
-    <title>Superieur Admin - Dashboard  Blank Page </title>
-
-    <!-- Bootstrap 4.0-->
-    <link rel="stylesheet" href="{{asset('assets/vendor_components/bootstrap/dist/css/bootstrap.min.css')}}">
-
-    <!-- Bootstrap extend-->
-    <link rel="stylesheet" href="{{asset('css/bootstrap-extend.css')}}">
-
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('css/master_style.css')}}">
-
-    <!-- Superieur Admin skins -->
-    <link rel="stylesheet" href="{{asset('css/skins/_all-skins.css')}}">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <link rel="stylesheet" href="{{ asset('assets/vendor_components/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-extend.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/master_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/skins/_all-skins.css') }}">
+    <style>
+        .table td, .table th {
+            vertical-align: middle !important;
+        }
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .btn {
+            border-radius: 8px;
+        }
+        .main-footer {
+            padding: 20px 0;
+        }
+    </style>
 </head>
 <body class="hold-transition skin-info-light fixed sidebar-mini rtl">
-<div class="container">
-    <h2>Sizes</h2>
+<div class="wrapper">
 
-    <form action="{{ route('admin.sizes.store') }}" method="POST" class="mb-4">
-        @csrf
-        <div class="input-group">
-            <input type="text" name="name" class="form-control" placeholder="Size Name" required>
-            <button class="btn btn-primary">Add Size</button>
-        </div>
-    </form>
+    <!-- header -->
+    <header class="main-header">
+        @include('admin.pages.partial.header')
+    </header>
 
-    <table class="table table-bordered">
-        <thead>
-        <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
-        </thead>
-        <tbody>
-        @foreach($sizes as $size)
-            <tr>
-                <td>{{ $size->id }}</td>
-                <td>{{ $size->name }}</td>
-                <td>
-                    <a href="{{ route('admin.sizes.edit', $size->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('admin.sizes.destroy', $size->id) }}" method="POST" style="display:inline;">
+    <!-- sidebar -->
+    <aside class="main-sidebar">
+        @include('admin.pages.partial.asside')
+    </aside>
+
+    <div class="content-wrapper p-4">
+        <section class="content">
+
+            <h2 class="mb-4 text-center">مدیریت سایزها</h2>
+
+            {{-- پیام موفقیت یا خطا --}}
+            @if(session('success'))
+                <div class="alert alert-success text-center">{{ session('success') }}</div>
+            @endif
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- فرم افزودن سایز --}}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white fw-bold">افزودن سایز جدید</div>
+                <div class="card-body">
+                    <form action="{{ route('admin.sizes.store') }}" method="POST" class="row g-3 align-items-center">
                         @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm" onclick="return confirm('Delete?')">Delete</button>
+                        <div class="col-md-3">
+                            <label class="form-label">نام سایز</label>
+                            <input type="text" name="name" class="form-control" placeholder="مثلاً XL" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">توضیحات</label>
+                            <input type="text" name="description" class="form-control" placeholder="توضیحات (اختیاری)">
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <label class="form-label d-block">وضعیت</label>
+                            <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" checked>
+                            <label class="form-check-label" for="is_active">فعال</label>
+                        </div>
+                        <div class="col-md-1 text-center mt-3">
+                            <button type="submit" class="btn btn-success w-100">+</button>
+                        </div>
                     </form>
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+                </div>
+            </div>
+
+            {{-- جدول سایزها --}}
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white fw-bold">لیست سایزها</div>
+                <div class="card-body p-0">
+                    <table class="table table-striped table-hover mb-0 text-center">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>نام سایز</th>
+                            <th>توضیحات</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($sizes as $size)
+                            <tr>
+                                <td>{{ $size->id }}</td>
+                                <td>
+                                    <form action="{{ route('admin.sizes.update', $size->id) }}" method="POST" class="d-flex justify-content-center align-items-center gap-2">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="text" name="name" value="{{ $size->name }}" class="form-control text-center" style="max-width: 120px;" required>
+                                </td>
+                                <td>
+                                    <input type="text" name="description" value="{{ $size->description }}" class="form-control text-center" style="max-width: 200px;">
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="is_active" {{ $size->is_active ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm">ویرایش</button>
+                                    </form>
+                                    <form action="{{ route('admin.sizes.destroy', $size->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm" onclick="return confirm('حذف شود؟')">حذف</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="5" class="text-center text-muted">هیچ سایزی ثبت نشده است.</td></tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </div>
 </div>
-<footer class="main-footer">
+
+<footer class="main-footer text-center mt-5">
     @include('admin.pages.partial.footer')
 </footer>
-<!-- /.control-sidebar -->
 
-<!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
-<div class="control-sidebar-bg"></div>
-</div>
-<!-- ./wrapper -->
-
-
-<!-- jQuery 3 -->
-<script src="{{asset('assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js')}}"></script>
-
-<!-- popper -->
-<script src="{{asset('assets/vendor_components/popper/dist/popper.min.js')}}"></script>
-
-<!-- Bootstrap 4.0-->
-<script src="{{asset('assets/vendor_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-
-<!-- SlimScroll -->
-<script src="{{asset('assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{asset('assets/vendor_components/fastclick/lib/fastclick.js')}}"></script>
-<!-- Superieur Admin App -->
-<script src="{{asset('js/template.js')}}"></script>
-<!-- Superieur Admin for demo purposes -->
-<script src="{{asset('js/demo.js')}}"></script>
+<!-- Scripts -->
+<script src="{{ asset('assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/popper/dist/popper.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('assets/vendor_components/fastclick/lib/fastclick.js') }}"></script>
+<script src="{{ asset('js/template.js') }}"></script>
+<script src="{{ asset('js/demo.js') }}"></script>
 </body>
 </html>
-
