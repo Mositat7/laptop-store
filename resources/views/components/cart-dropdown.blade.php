@@ -15,7 +15,7 @@
             {{ $totalItems }} کالا
         </div>
         @if($totalItems > 0)
-            <a href="#" class="text-primary-600 text-sm hover:underline">مشاهده سبد خرید</a>
+            <a href="/cart" class="text-primary-600 text-sm hover:underline">مشاهده سبد خرید</a>
         @endif
     </div>
 

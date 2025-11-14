@@ -12,9 +12,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('short_description');
-            $table->text('content');
-            $table->string('image');
+            $table->text('short_description')->nullable();;
+            $table->text('content')->nullable();;
+            $table->string('image')->nullable();;
             $table->string('author')->default('تیم محتوا');
             $table->date('publish_date');
             $table->integer('views')->default(0);
