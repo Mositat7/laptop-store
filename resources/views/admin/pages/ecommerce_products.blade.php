@@ -78,7 +78,6 @@
 	</div>
 
       <!-- Main content -->
-      <!-- Main content -->
       <section class="content">
           <div class="row">
               @foreach($products as $product)
@@ -94,7 +93,7 @@
                                       <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-primary btn-icon-circle" title="View Details">
                                           <i class="mdi mdi-eye"></i>
                                       </a>
-
+<
                                       <!-- ویرایش -->
                                       <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning btn-icon-circle" title="Edit">
                                           <i class="mdi mdi-pencil"></i>
