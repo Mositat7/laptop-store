@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
 use App\Models\Brands;
 use App\Models\categories;
@@ -43,7 +44,7 @@ class ProductController extends Controller
             'gallery.*' => 'nullable|image|mimes:jpg,jpeg,png,webp',
         ]);
 
-        $product = new Product();
+        $product = new Products();
         $product->title = $request->title;
         $product->slug = $request->slug;
         $product->short_description = $request->short_description;

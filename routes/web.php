@@ -151,3 +151,5 @@ Route::middleware('auth')->group(function () {
     */
     Route::post('/contactUs', [ContactController::class, 'store'])->name('contact.store');
 });
+// Load admin routes
+require __DIR__.'/admin.php';
