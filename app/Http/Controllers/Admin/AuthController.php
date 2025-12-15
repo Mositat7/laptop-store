@@ -19,20 +19,6 @@ class AuthController extends Controller
     /**
      * لاگین ادمین
      */
-//    public function login(Request $request)
-//    {
-//        $credentials = $request->only('email', 'password');
-//
-//        // 👈 استفاده از guard admin
-//        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password, 'role' => 'admin'])) {
-//            return redirect()->route('admin.dashboard');
-//        }
-//        // شکست: برگشت به فرم با ارور
-//        return back()->withErrors([
-//            'email' => 'ایمیل یا پسورد اشتباه است.',
-//        ])->withInput();
-//    }
-//
     public function login(Request $request)
     {
         $credentials = $request->validate([
